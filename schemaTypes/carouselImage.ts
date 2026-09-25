@@ -5,20 +5,16 @@ export default defineType({
   title: "Carousel Image",
   type: "document",
   description:
-    "Satu slide carousel. INPUT → OUTPUT: 'Shown On' = Home Page → marquee gambar di homepage; Svvara Store Partners → carousel STORE PARTNERS di /svvara.",
+    "Satu slide carousel. INPUT → OUTPUT: 'Shown On' = Home Page → marquee gambar di homepage.",
   fields: [
     defineField({
       name: "placement",
       title: "Shown On",
       type: "string",
-      description:
-        "→ halaman tujuan slide ini. Home Page = marquee homepage; Svvara Store Partners = carousel di /svvara.",
+      description: "→ halaman tujuan slide ini. Home Page = marquee homepage.",
       options: {
         layout: "radio",
-        list: [
-          { title: "Home Page — Rolling Gallery", value: "home" },
-          { title: "Svvara Page — Store Partners", value: "svvaraPartners" },
-        ],
+        list: [{ title: "Home Page — Rolling Gallery", value: "home" }],
       },
       validation: (rule) => rule.required(),
       initialValue: "home",
@@ -48,8 +44,7 @@ export default defineType({
       name: "brand",
       title: "Brand",
       type: "string",
-      description:
-        "Samsara/Svarga/Acasa/Svvara → label alt. Di homepage, slide brand non-aktif (Svvara) otomatis disembunyikan.",
+      description: "Samsara/Svarga/Acasa/Grove/Outpace → label alt slide di homepage.",
     }),
     defineField({
       name: "order",

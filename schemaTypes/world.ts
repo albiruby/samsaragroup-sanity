@@ -33,7 +33,7 @@ export default defineType({
       title: "Description",
       type: "text",
       rows: 4,
-      description: "→ paragraf deskripsi di halaman brand (mis. 'THE V110' di /svvara)",
+      description: "→ paragraf deskripsi di halaman brand",
     }),
     defineField({
       name: "image",

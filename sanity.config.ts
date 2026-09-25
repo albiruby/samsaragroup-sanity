@@ -38,43 +38,20 @@ export default defineConfig({
                   templateId: 'carouselImage-home',
                 }),
               ),
-            S.listItem()
-              .id('svvara-partners-item')
-              .title('Svvara Page — Store Partners (carousel /svvara)')
-              .child(
-                carouselList(S, {
-                  id: 'svvara-partners',
-                  title: 'Svvara Page — Store Partners',
-                  placement: 'svvaraPartners',
-                  templateId: 'carouselImage-svvara-partners',
-                }),
-              ),
             S.divider(),
             S.listItem()
-              .id('world-thumbnail-item')
-              .title('Brands Page — World Thumbnail (→ kartu /brands)')
+              .id('world-item')
+              .title('Brands & Brand Pages — World (Thumbnail, Hero Carousel, Teks)')
               .child(
                 S.documentTypeList('world')
-                  .id('world-thumbnails')
-                  .title('Thumbnail per Brand — isi field Image'),
-              ),
-            S.listItem()
-              .id('world-hero-item')
-              .title('Brand Pages — Hero Carousel & Teks (isi field Gallery)')
-              .child(
-                S.documentTypeList('world')
-                  .id('world-hero')
-                  .title('Hero Carousel per Brand — isi field Gallery + Tagline/Description/Specs'),
+                  .id('world-list')
+                  .title('World — isi field Image (Thumbnail), Gallery (Hero Carousel), Tagline/Description/Specs'),
               ),
             S.divider(),
             S.listItem()
               .id('events-item')
               .title('Events Page — Event (→ /events)')
               .child(S.documentTypeList('event').id('events-list').title('Event — Events Page')),
-            S.listItem()
-              .id('products-item')
-              .title('Svvara Page — Product (→ carousel produk)')
-              .child(S.documentTypeList('product').id('products-list').title('Product — Svvara Page')),
             S.listItem()
               .id('contact-item')
               .title('Contact Page — Contact Info (→ /contact)')
@@ -96,12 +73,6 @@ export default defineConfig({
         title: 'Home Page — Rolling Gallery Image',
         schemaType: 'carouselImage',
         value: {placement: 'home', active: true, order: 100},
-      },
-      {
-        id: 'carouselImage-svvara-partners',
-        title: 'Svvara Page — Store Partner Image',
-        schemaType: 'carouselImage',
-        value: {placement: 'svvaraPartners', active: true, order: 100},
       },
     ],
   },
