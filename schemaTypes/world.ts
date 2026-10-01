@@ -127,11 +127,22 @@ const FEATURE_CARD = defineArrayMember({
 });
 
 const GALLERY_ITEM = defineArrayMember({
-  name: "galleryItem",
-  title: "Slide",
+  title: "Image",
   type: "image",
   options: { hotspot: true },
+});
+
+const GALLERY_SLIDE = defineArrayMember({
+  name: "galleryItem",
+  title: "Slide",
+  type: "object",
   fields: [
+    defineField({
+      name: "image",
+      title: "Image",
+      type: "image",
+      options: { hotspot: true },
+    }),
     defineField({
       name: "alt",
       title: "Alt Text",
@@ -139,6 +150,10 @@ const GALLERY_ITEM = defineArrayMember({
       description: "Deskripsi gambar untuk aksesibilitas. Kosongkan untuk memakai nama brand.",
     }),
   ],
+  preview: {
+    select: { title: "alt", media: "image" },
+    prepare: ({ title, media }) => ({ title: title || "Slide", media }),
+  },
 });
 
 const SECTION_LABELS: Record<string, string> = {
@@ -211,12 +226,15 @@ export default defineType({
       validation: (rule) => rule.max(80),
     }),
     defineField({
-      name: "category",
-      title: "Category",
-      type: "string",
+      name: "categories",
+      title: "Categories",
+      type: "array",
       group: "listing",
-      description: "Kelompok di dropdown navigasi BRANDS (desktop & mobile).",
-      options: { layout: "dropdown", list: CATEGORY_LIST },
+      description:
+        "Kelompok di dropdown navigasi BRANDS (desktop & mobile). Brand boleh masuk lebih dari satu kelompok.",
+      of: [{ type: "string" }],
+      options: { layout: "grid", list: CATEGORY_LIST },
+      validation: (rule) => rule.unique(),
     }),
     defineField({
       name: "image",
@@ -282,7 +300,7 @@ export default defineType({
       group: "hero",
       description:
         "Slider besar di atas halaman brand. Hanya 1 gambar? Tampil sebagai gambar lebar tunggal. Kosongkan untuk menyembunyikan carousel.",
-      of: [GALLERY_ITEM],
+      of: [GALLERY_ITEM, GALLERY_SLIDE],
       validation: (rule) => rule.max(20),
     }),
     defineField({
@@ -547,7 +565,7 @@ export default defineType({
       type: "boolean",
       group: "publishing",
       description:
-        "Matikan untuk menyembunyikan brand dari /brands, navigasi, dan sitemap tanpa menghapus dokumen.",
+        "Brand unggulan. Brand ini tampil di /brands, navigasi, dan sitemap. Turn off untuk menyembunyikan tanpa menghapus dokumen. Brand yang tidak punya kategori tidak muncul di dropdown.",
       initialValue: true,
     }),
     defineField({
