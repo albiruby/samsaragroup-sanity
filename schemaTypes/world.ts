@@ -15,6 +15,13 @@ const CTA_LIST = [
   { title: "All Links", value: "links" },
 ];
 
+/**
+ * These five brands are hand-tuned pages in src/app, and a static route wins over
+ * the dynamic [slug] template. A new brand reusing one of these slugs would publish
+ * successfully and then render the old hardcoded page instead.
+ */
+const RESERVED_SLUGS = ["samsara", "svarga", "acasa", "outpace", "grove"];
+
 const SPEC_ROW = defineArrayMember({
   name: "specRow",
   title: "Row",
@@ -204,9 +211,16 @@ export default defineType({
       type: "slug",
       group: "identity",
       description:
-        "Alamat halaman. samsara menjadi /samsara. Jangan diubah setelah live tanpa redirect.",
+        "Alamat halaman. samsara menjadi /samsara. Jangan diubah setelah live tanpa redirect. Lima slug di bawah dipakai route statis di kode, jadi jangan dipakai untuk brand baru.",
       options: { source: "name", maxLength: 96 },
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule.required().custom((value) => {
+          const current = (value as { current?: string } | undefined)?.current;
+          if (!current) return true;
+          return RESERVED_SLUGS.includes(current)
+            ? `Slug "${current}" dipakai halaman statis di website. Buat brand baru dengan slug lain.`
+            : true;
+        }),
     }),
     defineField({
       name: "tagline",
@@ -243,7 +257,8 @@ export default defineType({
       group: "listing",
       options: { hotspot: true },
       description:
-        "THUMBNAIL kartu di /brands. Rasio ideal potret 4:5. BEDA dari hero carousel di bawah.",
+        "THUMBNAIL kartu di /brands. Rasio ideal potret 4:5 — potret, bukan landscape. BEDA dari hero carousel di bawah.",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "logo",
