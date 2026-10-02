@@ -52,13 +52,31 @@ export default defineConfig({
               .id('events-item')
               .title('Events Page — Event (→ /events)')
               .child(S.documentTypeList('event').id('events-list').title('Event — Events Page')),
+            S.divider(),
+            S.listItem()
+              .id('career-item')
+              .title('Career Page — Career (→ /career)')
+              .child(
+                S.documentTypeList('career')
+                  .id('career-list')
+                  .title('Career — daftar lowongan (1 dokumen = 1 lowongan)'),
+              ),
+            S.listItem()
+              .id('career-page-item')
+              .title('Career Page — teks halaman (→ /career)')
+              .child(
+                S.documentTypeList('careerPage')
+                  .id('career-page-list')
+                  .title('Career Page — hero, judul daftar, Google Form, SEO'),
+              ),
+            S.divider(),
             S.listItem()
               .id('contact-item')
               .title('Contact Page — Contact Info (→ /contact)')
               .child(
                 S.documentTypeList('contactInfo')
                   .id('contact-list')
-                  .title('Contact Info — Contact Page'),
+                  .title('Contact Info — WhatsApp, alamat, jam'),
               ),
           ]),
     }),
