@@ -5,7 +5,7 @@ export default defineType({
   title: "Career Page",
   type: "document",
   description:
-    "Isi halaman /career. SATU dokumen untuk seluruh halaman — teks bagian atas, judul daftar lowongan, dan Google Formdefault. Lowongannya sendiri ada di dokumen Career.",
+    "Isi halaman /career. SATU dokumen untuk seluruh halaman — teks bagian atas, judul daftar lowongan, dan Google Form default. Lowongannya sendiri ada di dokumen Career.",
   groups: [
     { name: "hero", title: "1 - Hero", default: true },
     { name: "listings", title: "2 - Listings" },
