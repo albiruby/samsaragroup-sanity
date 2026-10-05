@@ -580,7 +580,7 @@ export default defineType({
       type: "boolean",
       group: "publishing",
       description:
-        "Brand unggulan. Brand ini tampil di /brands, navigasi, dan sitemap. Turn off untuk menyembunyikan tanpa menghapus dokumen. Brand yang tidak punya kategori tidak muncul di dropdown.",
+        "Brand unggulan. Tampil di /brands, dropdown navigasi (semua halaman), dan sitemap. PENTING: Featured = false membuat halaman /<slug> mengembalikan 404 — brand hilang total dari situs, bukan hanya dari daftar. Gunakan status Draft jika hanya ingin menyembunyikan tanpaapus dokumen. Brand tanpa kategori tidak muncul di dropdown.",
       initialValue: true,
     }),
     defineField({
