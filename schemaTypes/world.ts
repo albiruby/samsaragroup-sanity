@@ -1,12 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
-const CATEGORY_LIST = [
-  { title: "Iconic", value: "ICONIC" },
-  { title: "Speciality", value: "SPECIALITY" },
-  { title: "Everyday", value: "EVERYDAY" },
-  { title: "Wellbeing", value: "WELLBEING" },
-];
-
 const CTA_LIST = [
   { title: "Reservation", value: "reservation" },
   { title: "Menu", value: "menu" },
@@ -228,7 +221,7 @@ export default defineType({
       type: "string",
       group: "listing",
       description:
-        "e.g. THE SANCTUARY. Tampil di kartu /brands dan di bawah judul halaman brand.",
+        "e.g. The Listening Room. Jadi judul baris di dropdown navigasi BRANDS, dan tampil di kartu /brands serta di bawah judul halaman brand. Wajib diisi agar brand punya judul sendiri di navigasi.",
       validation: (rule) => rule.max(80),
     }),
     defineField({
@@ -236,19 +229,8 @@ export default defineType({
       title: "Speciality",
       type: "string",
       group: "listing",
-      description: "Baris kecil di dropdown navigasi BRANDS. e.g. Culinary & Hearth.",
+      description: "Baris kecil di dropdown navigasi BRANDS. e.g. Vinyl - Dining - Culture.",
       validation: (rule) => rule.max(80),
-    }),
-    defineField({
-      name: "categories",
-      title: "Categories",
-      type: "array",
-      group: "listing",
-      description:
-        "Kelompok di dropdown navigasi BRANDS (desktop & mobile). Brand boleh masuk lebih dari satu kelompok.",
-      of: [{ type: "string" }],
-      options: { layout: "grid", list: CATEGORY_LIST },
-      validation: (rule) => rule.unique(),
     }),
     defineField({
       name: "image",
@@ -580,7 +562,7 @@ export default defineType({
       type: "boolean",
       group: "publishing",
       description:
-        "Brand unggulan. Tampil di /brands, dropdown navigasi (semua halaman), dan sitemap. PENTING: Featured = false membuat halaman /<slug> mengembalikan 404 — brand hilang total dari situs, bukan hanya dari daftar. Gunakan status Draft jika hanya ingin menyembunyikan tanpaapus dokumen. Brand tanpa kategori tidak muncul di dropdown.",
+        "Brand unggulan. Tampil di /brands, sebagai baris sendiri di dropdown navigasi (semua halaman), dan di sitemap. PENTING: Featured = false membuat halaman /<slug> mengembalikan 404 — brand hilang total dari situs, bukan hanya dari daftar. Gunakan status Draft jika hanya ingin menyembunyikan tanpaapus dokumen.",
       initialValue: true,
     }),
     defineField({
