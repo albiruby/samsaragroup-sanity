@@ -49,6 +49,16 @@ export default defineConfig({
               ),
             S.divider(),
             S.listItem()
+              .id('brand-nav-item')
+              .title('Header Menu — BRANDS Dropdown (→ semua halaman)')
+              .child(
+                S.documentTypeList('brandNav')
+                  .id('brand-nav-list')
+                  .title('BRANDS Dropdown — baris & urutan menu BRANDS')
+                  .initialValueTemplates(S.initialValueTemplateItem('brandNav-default')),
+              ),
+            S.divider(),
+            S.listItem()
               .id('events-item')
               .title('Events Page — Event (→ /events)')
               .child(S.documentTypeList('event').id('events-list').title('Event — Events Page')),
@@ -91,6 +101,12 @@ export default defineConfig({
         title: 'Home Page — Rolling Gallery Image',
         schemaType: 'carouselImage',
         value: {placement: 'home', active: true, order: 100},
+      },
+      {
+        id: 'brandNav-default',
+        title: 'BRANDS Dropdown',
+        schemaType: 'brandNav',
+        value: {seeAllLabel: 'See All Brands →', emptyLabel: 'Hover a brand', rows: []},
       },
     ],
   },
