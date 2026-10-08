@@ -1,4 +1,12 @@
 import { defineField, defineType } from "sanity";
+import { SuggestionTextInput } from "../components/SuggestionTextInput";
+
+const CATEGORIES = [
+  { title: "Music & Listening", value: "music" },
+  { title: "Dining & Terroir", value: "dining" },
+  { title: "Leisure & Community", value: "community" },
+  { title: "Workshop & Craft", value: "workshop" },
+];
 
 export default defineType({
   name: "event",
@@ -23,15 +31,10 @@ export default defineType({
       name: "category",
       title: "Category",
       type: "string",
-      options: {
-        layout: "dropdown",
-        list: [
-          { title: "Music & Listening", value: "music" },
-          { title: "Dining & Terroir", value: "dining" },
-          { title: "Leisure & Community", value: "community" },
-          { title: "Workshop & Craft", value: "workshop" },
-        ],
-      },
+      description:
+        "Tampil sebagai label kecil di kartu event. Ketik bebas untuk kategori baru, atau pilih dari daftar.",
+      components: { input: SuggestionTextInput },
+      options: { list: CATEGORIES },
       validation: (rule) => rule.required(),
     }),
     defineField({

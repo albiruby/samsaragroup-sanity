@@ -1,4 +1,7 @@
 import { defineField, defineType } from "sanity";
+import { SuggestionTextInput } from "../components/SuggestionTextInput";
+
+const BRANDS = ["Samsara", "Svarga", "Acasa", "Outpace", "Grove"];
 
 export default defineType({
   name: "carouselImage",
@@ -45,6 +48,8 @@ export default defineType({
       title: "Brand",
       type: "string",
       description: "Samsara/Svarga/Acasa/Grove/Outpace → label alt slide di homepage.",
+      components: { input: SuggestionTextInput },
+      options: { list: BRANDS },
     }),
     defineField({
       name: "order",

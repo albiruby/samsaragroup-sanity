@@ -11,7 +11,15 @@ function listValue(option: unknown): string {
   return String(option)
 }
 
-export function DepartmentInput(props: StringInputProps) {
+/**
+ * Free-text string input with the schema's `options.list` as suggestions.
+ *
+ * A plain string + options.list renders as a select, so the value can only ever
+ * be one of the listed options. This keeps the list as a convenience while
+ * letting editors type anything, which is what fields such as a job department
+ * or an event category need when the real world does not fit the template.
+ */
+export function SuggestionTextInput(props: StringInputProps) {
   const {elementProps, onChange, readOnly, schemaType, validationError, value} = props
   const [focused, setFocused] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
