@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { DepartmentInput } from "../components/DepartmentInput";
 
 const DEPARTMENTS = [
   { title: "Kitchen", value: "Kitchen" },
@@ -75,8 +76,10 @@ export default defineType({
       title: "Department",
       type: "string",
       group: "role",
-      description: "Chip filter di /career.",
-      options: { layout: "dropdown", list: DEPARTMENTS },
+      description:
+        "Chip filter di /career. Ketik bebas untuk departemen baru — nilainya jadi chip filter tersendiri di /career. Pilih dari daftar bila mau ikut template.",
+      components: { input: DepartmentInput },
+      options: { list: DEPARTMENTS },
       validation: (rule) => rule.required(),
     }),
     defineField({
