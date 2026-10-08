@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { SuggestionTextInput } from "../components/SuggestionTextInput";
+import { suggestionInput } from "../components/SuggestionTextInput";
 
 const DAYS = [
   "Monday",
@@ -10,6 +10,8 @@ const DAYS = [
   "Saturday",
   "Sunday",
 ];
+
+const DAY_FIELD = suggestionInput(DAYS);
 
 const CTA_LIST = [
   { title: "Reservation", value: "reservation" },
@@ -466,8 +468,7 @@ export default defineType({
               name: "day",
               title: "Day",
               type: "string",
-              components: { input: SuggestionTextInput },
-              options: { list: DAYS },
+              components: { input: DAY_FIELD },
               validation: (rule) => rule.required(),
             }),
             defineField({

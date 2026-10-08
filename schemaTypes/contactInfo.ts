@@ -1,7 +1,9 @@
 import { defineField, defineType } from "sanity";
-import { SuggestionTextInput } from "../components/SuggestionTextInput";
+import { suggestionInput } from "../components/SuggestionTextInput";
 
 const CITIES = ["Bogor", "Sukabumi", "Singapore"];
+
+const CITY_FIELD = suggestionInput(CITIES);
 
 export default defineType({
   name: "contactInfo",
@@ -32,8 +34,7 @@ export default defineType({
               title: "Kota",
               type: "string",
               description: "Tampil kecil di samping nama, e.g. Bogor.",
-              components: { input: SuggestionTextInput },
-              options: { list: CITIES },
+              components: { input: CITY_FIELD },
               validation: (rule) => rule.max(40),
             },
             {

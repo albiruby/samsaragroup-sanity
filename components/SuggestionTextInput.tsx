@@ -3,38 +3,44 @@ import type {ChangeEvent, FocusEvent, KeyboardEvent} from 'react'
 import {Box, Card, Stack, Text, TextInput} from '@sanity/ui'
 import {set, unset, type StringInputProps} from 'sanity'
 
-function listValue(option: unknown): string {
-  if (typeof option === 'string') return option
-  if (option && typeof option === 'object' && 'value' in option) {
-    return String((option as {value: unknown}).value)
-  }
-  return String(option)
+export type Suggestion = string | {title: string; value: string}
+
+type SuggestionTextInputProps = StringInputProps & {
+  suggestions?: Suggestion[]
+}
+
+type Choice = {label: string; value: string}
+
+function toChoices(suggestions: Suggestion[]): Choice[] {
+  return suggestions.map((suggestion) =>
+    typeof suggestion === 'string'
+      ? {label: suggestion, value: suggestion}
+      : {label: suggestion.title, value: suggestion.value},
+  )
 }
 
 /**
- * Free-text string input with the schema's `options.list` as suggestions.
+ * Free-text string input with a dropdown of suggestions.
  *
- * A plain string + options.list renders as a select, so the value can only ever
- * be one of the listed options. This keeps the list as a convenience while
- * letting editors type anything, which is what fields such as a job department
- * or an event category need when the real world does not fit the template.
+ * The suggestions arrive as a prop, never through `options.list`: Sanity turns a
+ * string field with `options.list` into a union of those values
+ * (`createStringTypeNodeDefintion`), so anything typed outside the list is
+ * rejected with "did not match any allowed values" — no custom input can
+ * override that.
  */
-export function SuggestionTextInput(props: StringInputProps) {
-  const {elementProps, onChange, readOnly, schemaType, validationError, value} = props
+export function SuggestionTextInput(props: SuggestionTextInputProps) {
+  const {elementProps, onChange, readOnly, suggestions = [], validationError, value} = props
   const [focused, setFocused] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
 
   const current = typeof value === 'string' ? value : ''
 
-  const suggestions = useMemo(() => {
-    const list = schemaType.options?.list
-    return Array.isArray(list) ? list.map(listValue) : []
-  }, [schemaType])
+  const choices = useMemo(() => toChoices(suggestions), [suggestions])
 
   const matches = useMemo(() => {
     const query = current.trim().toLowerCase()
-    return suggestions.filter((suggestion) => suggestion.toLowerCase().includes(query))
-  }, [current, suggestions])
+    return choices.filter((choice) => choice.label.toLowerCase().includes(query))
+  }, [choices, current])
 
   const open = focused && !readOnly && matches.length > 0
   const active = activeIndex >= matches.length ? -1 : activeIndex
@@ -93,7 +99,7 @@ export function SuggestionTextInput(props: StringInputProps) {
       }
       if (event.key === 'Enter' && active >= 0 && matches[active]) {
         event.preventDefault()
-        choose(matches[active])
+        choose(matches[active].value)
       }
     },
     [active, choose, matches],
@@ -129,20 +135,20 @@ export function SuggestionTextInput(props: StringInputProps) {
         >
           <Card border padding={2} radius={2} shadow={1}>
             <Stack gap={1}>
-              {matches.map((suggestion, index) => (
+              {matches.map((choice, index) => (
                 <Card
-                  key={suggestion}
+                  key={choice.value}
                   as="button"
                   type="button"
                   padding={3}
                   radius={1}
                   tone={index === active ? 'primary' : 'transparent'}
                   style={{width: '100%', textAlign: 'left', cursor: 'pointer'}}
-                  onClick={() => choose(suggestion)}
+                  onClick={() => choose(choice.value)}
                   onMouseEnter={() => setActiveIndex(index)}
                 >
                   <Text size={1} textOverflow="ellipsis">
-                    {suggestion}
+                    {choice.label}
                   </Text>
                 </Card>
               ))}
@@ -152,4 +158,14 @@ export function SuggestionTextInput(props: StringInputProps) {
       )}
     </Box>
   )
+}
+
+/**
+ * Builds the `components.input` for a field. Exists so the `.ts` schema files
+ * can wire up suggestions without JSX.
+ */
+export function suggestionInput(suggestions: Suggestion[]) {
+  return function SuggestionInput(props: StringInputProps) {
+    return <SuggestionTextInput {...props} suggestions={suggestions} />
+  }
 }

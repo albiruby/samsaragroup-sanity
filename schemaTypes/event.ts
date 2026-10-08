@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { SuggestionTextInput } from "../components/SuggestionTextInput";
+import { suggestionInput } from "../components/SuggestionTextInput";
 
 const CATEGORIES = [
   { title: "Music & Listening", value: "music" },
@@ -33,8 +33,7 @@ export default defineType({
       type: "string",
       description:
         "Tampil sebagai label kecil di kartu event. Ketik bebas untuk kategori baru, atau pilih dari daftar.",
-      components: { input: SuggestionTextInput },
-      options: { list: CATEGORIES },
+      components: { input: suggestionInput(CATEGORIES) },
       validation: (rule) => rule.required(),
     }),
     defineField({
