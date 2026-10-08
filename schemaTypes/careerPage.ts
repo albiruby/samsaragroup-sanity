@@ -71,6 +71,15 @@ export default defineType({
       validation: (rule) => rule.required().max(60),
     }),
     defineField({
+      name: "emptyHeadline",
+      title: "Judul saat tidak ada lowongan",
+      type: "string",
+      group: "listings",
+      description:
+        "Tampil besar menggantikan 'Judul daftar lowongan' kalau tidak ada lowongan aktif sama sekali. e.g. No open positions right now.",
+      validation: (rule) => rule.max(60),
+    }),
+    defineField({
       name: "emptyMessage",
       title: "Pesan saat lowongan kosong",
       type: "string",
