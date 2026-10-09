@@ -15,10 +15,12 @@ const DAY_FIELD = suggestionInput(DAYS);
 
 const CTA_LIST = [
   { title: "Reservation", value: "reservation" },
-  { title: "Menu", value: "menu" },
-  { title: "Location", value: "location" },
-  { title: "Career", value: "career" },
-  { title: "All Links", value: "links" },
+  { title: "Room Rate", value: "roomrate" },
+  { title: "Instagram", value: "instagram" },
+  { title: "Menu (nonaktif di web)", value: "menu" },
+  { title: "Location (nonaktif di web)", value: "location" },
+  { title: "Career (nonaktif di web)", value: "career" },
+  { title: "All Links (nonaktif di web)", value: "links" },
 ];
 
 /**
@@ -179,6 +181,8 @@ const SECTION_LABELS: Record<string, string> = {
 
 const CTA_LABELS: Record<string, string> = {
   reservation: "RESERVATION",
+  roomrate: "ROOM RATE",
+  instagram: "INSTAGRAM",
   menu: "MENU",
   location: "LOCATION",
   career: "CAREER",
@@ -244,6 +248,16 @@ export default defineType({
       group: "listing",
       description: "Baris kecil di dropdown navigasi BRANDS. e.g. Vinyl - Dining - Culture.",
       validation: (rule) => rule.max(80),
+    }),
+    defineField({
+      name: "categories",
+      title: "Categories",
+      type: "array",
+      group: "listing",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+      description:
+        "Label kategori brand, mis. ICONIC, SPECIALITY, WELLBEING, EVERYDAY. Data lama masih tersimpan di sini; grouping dropdown BRANDS saat ini diatur lewat dokumen BRANDS Dropdown, bukan field ini.",
     }),
     defineField({
       name: "image",
@@ -515,7 +529,7 @@ export default defineType({
               title: "Custom Label",
               type: "string",
               description:
-                "Kosongkan untuk memakai label default (RESERVATION, MENU, LOCATION, CAREER, LINKS).",
+                "Kosongkan untuk memakai label default (RESERVATION, ROOM RATE, INSTAGRAM).",
               validation: (rule) => rule.max(20),
             }),
             defineField({
