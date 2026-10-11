@@ -12,19 +12,12 @@ export default defineType({
   name: "event",
   title: "Event",
   type: "document",
-  description: "INPUT: title, date, category, image, dll. → OUTPUT: kartu event di halaman /events + detail /events/[slug].",
+  description: "INPUT: title, date, category, image, dll. → OUTPUT: kartu event di halaman /events. Detail diarahkan lewat field Link.",
   fields: [
     defineField({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: "slug",
-      title: "Slug",
-      type: "slug",
-      options: { source: "title", maxLength: 96 },
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -80,12 +73,6 @@ export default defineType({
       type: "image",
       options: { hotspot: true },
       validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: "featured",
-      title: "Featured",
-      type: "boolean",
-      initialValue: false,
     }),
     defineField({
       name: "link",
