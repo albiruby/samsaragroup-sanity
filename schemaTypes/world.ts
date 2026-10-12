@@ -1,17 +1,4 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { suggestionInput } from "../components/SuggestionTextInput";
-
-const DAYS = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
-
-const DAY_FIELD = suggestionInput(DAYS);
 
 const CTA_LIST = [
   { title: "Reservation", value: "reservation" },
@@ -471,7 +458,8 @@ export default defineType({
       title: "Opening Hours",
       type: "array",
       group: "location",
-      description: "Jam buka-tutup per hari.",
+      description:
+        "Jam buka, dikelompokkan singkat. Contoh label: Weekdays dan Weekend. Kosongkan untuk menyembunyikan blok ini di halaman brand.",
       of: [
         defineArrayMember({
           name: "hoursRow",
@@ -479,10 +467,10 @@ export default defineType({
           type: "object",
           fields: [
             defineField({
-              name: "day",
-              title: "Day",
+              name: "label",
+              title: "Label",
               type: "string",
-              components: { input: DAY_FIELD },
+              description: "mis. Weekdays, Weekend, Mon–Fri",
               validation: (rule) => rule.required(),
             }),
             defineField({
@@ -493,7 +481,7 @@ export default defineType({
               validation: (rule) => rule.required(),
             }),
           ],
-          preview: { select: { title: "day", subtitle: "value" } },
+          preview: { select: { title: "label", subtitle: "value" } },
         }),
       ],
     }),
