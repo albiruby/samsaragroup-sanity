@@ -287,7 +287,7 @@ export default defineType({
       title: "Hero Eyebrow",
       type: "string",
       group: "hero",
-      description: "Label kecil di atas judul. Kosongkan untuk memakai WORLDS.",
+      description: "Label kecil di atas judul. Kosongkan untuk memakai BRANDS.",
       validation: (rule) => rule.max(24),
     }),
     defineField({
