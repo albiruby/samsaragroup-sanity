@@ -211,12 +211,14 @@ export default defineType({
         "Alamat halaman. samsara menjadi /samsara. Jangan diubah setelah live tanpa redirect. Lima slug di bawah dipakai route statis di kode, jadi jangan dipakai untuk brand baru.",
       options: { source: "name", maxLength: 96 },
       validation: (rule) =>
-        rule.required().custom((value) => {
+        rule.required().custom((value, context) => {
           const current = (value as { current?: string } | undefined)?.current;
           if (!current) return true;
-          return RESERVED_SLUGS.includes(current)
-            ? `Slug "${current}" dipakai halaman statis di website. Buat brand baru dengan slug lain.`
-            : true;
+          if (!RESERVED_SLUGS.includes(current)) return true;
+          const id = context?.document?._id?.replace(/^drafts\./, "");
+          return id === `world-${current}`
+            ? true
+            : `Slug "${current}" dipakai halaman statis di website. Buat brand baru dengan slug lain.`;
         }),
     }),
     defineField({
