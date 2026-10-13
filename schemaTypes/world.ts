@@ -4,10 +4,6 @@ const CTA_LIST = [
   { title: "Reservation", value: "reservation" },
   { title: "Room Rate", value: "roomrate" },
   { title: "Instagram", value: "instagram" },
-  { title: "Menu (nonaktif di web)", value: "menu" },
-  { title: "Location (nonaktif di web)", value: "location" },
-  { title: "Career (nonaktif di web)", value: "career" },
-  { title: "All Links (nonaktif di web)", value: "links" },
 ];
 
 /**
