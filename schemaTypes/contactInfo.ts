@@ -42,7 +42,7 @@ export default defineType({
               title: "Nomor Tampil",
               type: "string",
               description:
-                "Nomor yang dilihat pembaca, boleh pakai garis. e.g. 0812-8127-1988",
+                "Nomor yang dilihat pembaca, boleh pakai garis. e.g. +62 852-8127-1988",
               validation: (rule) => rule.required().max(24),
             },
             {
