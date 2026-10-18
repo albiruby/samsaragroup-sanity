@@ -1,5 +1,6 @@
 import event from "./event";
 import eventsPage from "./eventsPage";
+import homePage from "./homePage";
 import world from "./world";
 import brandNav from "./brandNav";
 import contactInfo from "./contactInfo";
@@ -8,6 +9,7 @@ import career from "./career";
 import careerPage from "./careerPage";
 
 export const schemaTypes = [
+  homePage,
   event,
   eventsPage,
   world,

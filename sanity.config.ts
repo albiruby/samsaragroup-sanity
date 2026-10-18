@@ -28,6 +28,16 @@ export default defineConfig({
           .title('Content by Page')
           .items([
             S.listItem()
+              .id('home-page-item')
+              .title('Home Page — teks & gambar (→ /)')
+              .child(
+                S.document()
+                  .schemaType('homePage')
+                  .documentId('homePage')
+                  .title('Home Page — hero, About Us, Our Brands'),
+              ),
+            S.divider(),
+            S.listItem()
               .id('home-marquee')
               .title('Home Page — Rolling Gallery (marquee homepage)')
               .child(
