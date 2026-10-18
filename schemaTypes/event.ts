@@ -81,6 +81,23 @@ export default defineType({
       description: "External link (e.g. Instagram, ticketing, registration)",
       validation: (rule) => rule.uri({ allowRelative: false }),
     }),
+    defineField({
+      name: "status",
+      title: "Status",
+      type: "string",
+      description:
+        "Active = tampil di halaman /events. Draft = hanya terlihat di Studio. Archived = disembunyikan tanpa dihapus. Dikosongkan pun dianggap Active, supaya event lama tetap tayang.",
+      initialValue: "active",
+      options: {
+        layout: "radio",
+        direction: "horizontal",
+        list: [
+          { title: "Active", value: "active" },
+          { title: "Draft", value: "draft" },
+          { title: "Archived", value: "archived" },
+        ],
+      },
+    }),
   ],
   orderings: [
     {

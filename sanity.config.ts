@@ -52,10 +52,10 @@ export default defineConfig({
               .id('brand-nav-item')
               .title('Header Menu — BRANDS Dropdown (→ semua halaman)')
               .child(
-                S.documentTypeList('brandNav')
-                  .id('brand-nav-list')
-                  .title('BRANDS Dropdown — baris & urutan menu BRANDS')
-                  .initialValueTemplates(S.initialValueTemplateItem('brandNav-default')),
+                S.document()
+                  .schemaType('brandNav')
+                  .documentId('brandNav')
+                  .title('BRANDS Dropdown — baris & urutan menu BRANDS'),
               ),
             S.divider(),
             S.listItem()
@@ -75,8 +75,9 @@ export default defineConfig({
               .id('career-page-item')
               .title('Career Page — teks halaman (→ /career)')
               .child(
-                S.documentTypeList('careerPage')
-                  .id('career-page-list')
+                S.document()
+                  .schemaType('careerPage')
+                  .documentId('careerPage')
                   .title('Career Page — hero, judul daftar, Google Form, SEO'),
               ),
             S.divider(),
@@ -84,8 +85,9 @@ export default defineConfig({
               .id('contact-item')
               .title('Contact Page — Contact Info (→ /contact)')
               .child(
-                S.documentTypeList('contactInfo')
-                  .id('contact-list')
+                S.document()
+                  .schemaType('contactInfo')
+                  .documentId('contactInfo')
                   .title('Contact Info — WhatsApp, alamat, jam'),
               ),
           ]),

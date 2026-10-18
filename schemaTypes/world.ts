@@ -111,16 +111,9 @@ const FEATURE_CARD = defineArrayMember({
       description: "Paragraf pendek di bawah judul",
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: "image",
-      title: "Image",
-      type: "image",
-      options: { hotspot: true },
-      description: "Opsional. Tampil di atas kartu pada layout dua kolom.",
-    }),
   ],
   preview: {
-    select: { title: "title", subtitle: "copy", media: "image" },
+    select: { title: "title", subtitle: "copy" },
   },
 });
 
@@ -233,16 +226,6 @@ export default defineType({
       group: "listing",
       description: "Baris kecil di dropdown navigasi BRANDS. e.g. Vinyl - Dining - Culture.",
       validation: (rule) => rule.max(80),
-    }),
-    defineField({
-      name: "categories",
-      title: "Categories",
-      type: "array",
-      group: "listing",
-      of: [{ type: "string" }],
-      options: { layout: "tags" },
-      description:
-        "Label kategori brand, mis. ICONIC, SPECIALITY, WELLBEING, EVERYDAY. Data lama masih tersimpan di sini; grouping dropdown BRANDS saat ini diatur lewat dokumen BRANDS Dropdown, bukan field ini.",
     }),
     defineField({
       name: "image",
@@ -379,13 +362,6 @@ export default defineType({
               of: [FEATURE_CARD],
             }),
             defineField({
-              name: "image",
-              title: "Section Image",
-              type: "image",
-              options: { hotspot: true },
-              description: "Opsional. Tampil di kolom kanan section Text Block.",
-            }),
-            defineField({
               name: "menuPanels",
               title: "Menu Panels",
               type: "array",
@@ -428,20 +404,12 @@ export default defineType({
       validation: (rule) => rule.max(12),
     }),
     defineField({
-      name: "menuPanels",
-      title: "Standalone Menu Panels",
-      type: "array",
-      group: "menu",
-      description:
-        "Alternatif cepat: menu tanpa section. Section Menu dipakai otomatis bila diisi.",
-      of: [MENU_PANEL],
-    }),
-    defineField({
       name: "menuHeading",
       title: "Menu Heading",
       type: "string",
       group: "menu",
-      description: "Judul section menu untuk Standalone Menu Panels. Default: MENU.",
+      description:
+        "Judul bawaan untuk section Menu yang belum diisi Heading sendiri. Default: MENU.",
     }),
     defineField({
       name: "address",
