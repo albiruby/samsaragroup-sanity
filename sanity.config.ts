@@ -62,6 +62,15 @@ export default defineConfig({
               .id('events-item')
               .title('Events Page — Event (→ /events)')
               .child(S.documentTypeList('event').id('events-list').title('Event — Events Page')),
+            S.listItem()
+              .id('events-page-item')
+              .title('Events Page — teks halaman (→ /events)')
+              .child(
+                S.document()
+                  .schemaType('eventsPage')
+                  .documentId('eventsPage')
+                  .title('Events Page — judul, pesan saat kosong, SEO'),
+              ),
             S.divider(),
             S.listItem()
               .id('career-item')
