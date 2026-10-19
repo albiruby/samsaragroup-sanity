@@ -63,6 +63,26 @@ if ($LASTEXITCODE -ne 0) {
   exit 1
 }
 
+# Verifikasi mandiri: ukuran di Drive harus sama persis dengan berkas lokal.
+# Tanpa ini, "tidak ada error" tidak membuktikan berkasnya benar-benar utuh --
+# berkas kosong atau terpotong juga bisa selesai tanpa error.
+$ukuranDrive = $null
+foreach ($baris in (& $rclone lsf $tujuan --format "sp" --log-level ERROR 2>$null)) {
+  if ($baris -match '^(\d+);(.+)$' -and $Matches[2] -eq $arsip.Name) {
+    $ukuranDrive = [int64]$Matches[1]
+  }
+}
+
+if ($null -eq $ukuranDrive) {
+  Write-Host "   GAGAL: berkas tidak ditemukan di Drive setelah unggah"
+  exit 1
+} elseif ($ukuranDrive -ne $arsip.Length) {
+  Write-Host ("   GAGAL: ukuran berbeda -- lokal {0} byte, Drive {1} byte" -f $arsip.Length, $ukuranDrive)
+  exit 1
+} else {
+  Write-Host ("   terverifikasi: {0} byte, sama persis dengan berkas lokal" -f $ukuranDrive)
+}
+
 Write-Host ""
 Write-Host "=== 3. rapikan arsip lama di Drive ==="
 $daftar = & $rclone lsf $tujuan --files-only --log-level ERROR 2>$null |
@@ -81,3 +101,9 @@ Write-Host "=== selesai ==="
   Where-Object { $_ -like "production-*.tar.gz" } |
   Sort-Object -Descending |
   ForEach-Object { "   Drive: $_" }
+
+# Keluar dengan 0 secara eksplisit. rclone menulis ke stderr pada beberapa tahap,
+# dan itu membuat PowerShell mengakhiri proses dengan kode 1 walaupun semuanya
+# berhasil -- pemanggil mana pun akan salah membacanya sebagai kegagalan.
+# Kegagalan sungguhan sudah ditangani dengan exit 1 di tempatnya masing-masing.
+exit 0
