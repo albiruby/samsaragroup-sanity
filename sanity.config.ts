@@ -135,6 +135,7 @@ export default defineConfig([
     name: 'default',
     title: 'Sams Sams',
     dataset: 'production',
+    basePath: '/production',
   },
   {
     ...sharedConfig,
