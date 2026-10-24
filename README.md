@@ -1,9 +1,8 @@
-# Sanity Clean Content Studio
+# Sanity Studio — Samsara Group
 
-Congratulations, you have now installed the Sanity Content Studio, an open-source real-time content editing environment connected to the Sanity backend.
+Dua workspace:
 
-Now you can do the following things:
+- **Sams Sams** (`/`) → dataset `production`
+- **Sams Sams (Staging)** (`/staging`) → dataset `staging` (public; jangan unggah dokumen pribadi)
 
-- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
-- [Join the Sanity community](https://www.sanity.io/community/join?utm_source=readme)
-- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+Deploy: `npm run deploy` — kedua workspace ikut ter-deploy. Detail lingkungan, refresh dataset, dan preview ada di repo website: `docs/DOCUMENTATIONS.md` §12.2.

@@ -14,12 +14,8 @@ const carouselList = (
     .params({placement: opts.placement})
     .initialValueTemplates(S.initialValueTemplateItem(opts.templateId))
 
-export default defineConfig({
-  name: 'default',
-  title: 'Sams Sams',
-
+const sharedConfig = {
   projectId: 'p5zu5azj',
-  dataset: 'production',
 
   plugins: [
     structureTool({
@@ -131,4 +127,20 @@ export default defineConfig({
       },
     ],
   },
-})
+}
+
+export default defineConfig([
+  {
+    ...sharedConfig,
+    name: 'default',
+    title: 'Sams Sams',
+    dataset: 'production',
+  },
+  {
+    ...sharedConfig,
+    name: 'staging',
+    title: 'Sams Sams (Staging)',
+    dataset: 'staging',
+    basePath: '/staging',
+  },
+])
