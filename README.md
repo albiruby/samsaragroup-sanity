@@ -2,8 +2,8 @@
 
 Dua workspace:
 
-- **Sams Sams** (`/production`) → dataset `production`
-- **Sams Sams (Staging)** (`/staging`) → dataset `staging` (public; jangan unggah dokumen pribadi)
+- **Samsara Group** (`/production`) → dataset `production`
+- **Samsara Group (Staging)** (`/staging`) → dataset `staging` (public; jangan unggah dokumen pribadi)
 
 Root `/` menampilkan pemilih workspace; bookmark langsung ke `/production` atau `/staging`.
 

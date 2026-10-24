@@ -133,14 +133,14 @@ export default defineConfig([
   {
     ...sharedConfig,
     name: 'default',
-    title: 'Sams Sams',
+    title: 'Samsara Group',
     dataset: 'production',
     basePath: '/production',
   },
   {
     ...sharedConfig,
     name: 'staging',
-    title: 'Sams Sams (Staging)',
+    title: 'Samsara Group (Staging)',
     dataset: 'staging',
     basePath: '/staging',
   },
