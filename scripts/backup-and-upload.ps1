@@ -22,7 +22,7 @@ param(
 $ErrorActionPreference = "Stop"
 $here = $PSScriptRoot
 $localScript = Join-Path $here "backup-dataset.ps1"
-$localDir = "D:\Project Website INFIA\Samsara Group Website\backups\sanity"
+$localDir = "D:\Project Website Samsara Group\backups\sanity"
 
 # rclone bisa belum ada di PATH kalau baru dipasang (butuh shell baru), jadi dicari manual.
 function Find-Rclone {

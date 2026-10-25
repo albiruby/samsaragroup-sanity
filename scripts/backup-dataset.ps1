@@ -8,7 +8,7 @@
 #   powershell -ExecutionPolicy Bypass -File scripts\backup-dataset.ps1 -Keep 30
 
 param(
-  [string]$OutDir = "D:\Project Website INFIA\Samsara Group Website\backups\sanity",
+  [string]$OutDir = "D:\Project Website Samsara Group\backups\sanity",
   [int]$Keep = 14,
   [string]$Dataset = "production"
 )
