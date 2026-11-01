@@ -203,6 +203,9 @@ export default defineType({
         rule.required().custom((value, context) => {
           const current = (value as { current?: string } | undefined)?.current;
           if (!current) return true;
+          if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(current)) {
+            return 'Slug hanya boleh huruf kecil, angka, dan tanda hubung (contoh: "nama-brand").';
+          }
           if (!RESERVED_SLUGS.includes(current)) return true;
           const id = context?.document?._id?.replace(/^drafts\./, "");
           return id === `world-${current}`

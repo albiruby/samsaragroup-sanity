@@ -8,8 +8,8 @@
 #
 # Yang dilakukan:
 #   1. memanggil backup-dataset.ps1  -> arsip baru + simpan 14 terbaru secara lokal
-#   2. mengunggah arsip TERBARU ke remote "samsara-drive" (folder Drive yang dikunci)
-#   3. menghapus arsip lama di Drive, simpan $KeepOnDrive terbaru
+#   2. mengunggah arsip TERBARU ke remote "samsara-drive"
+#   3. memverifikasi ukuran + hash, lalu merapikan arsip lama di Drive
 #
 # Kalau Drive tidak bisa dihubungi, arsip lokal TETAP dibuat -- langkah unggah
 # hanya dilaporkan gagal, tidak membatalkan backup lokal.
@@ -20,17 +20,22 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+if ($Remote -notmatch '^[A-Za-z0-9._-]+$') { throw "Nama remote tidak valid: $Remote" }
+if ($KeepOnDrive -lt 1) { throw "KeepOnDrive minimal 1." }
+
 $here = $PSScriptRoot
 $localScript = Join-Path $here "backup-dataset.ps1"
 $localDir = "D:\Project Website Samsara Group\backups\sanity"
 
-# rclone bisa belum ada di PATH kalau baru dipasang (butuh shell baru), jadi dicari manual.
+# rclone bisa belum ada di PATH kalau baru dipasang (butuh shell baru). Jangan
+# mengeksekusi file pertama yang ditemukan di folder user-writable; pakai PATH
+# atau shim WinGet yang sudah ditentukan.
 function Find-Rclone {
   $cmd = Get-Command rclone -ErrorAction SilentlyContinue
   if ($cmd) { return $cmd.Source }
-  $kandidat = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages" -Recurse -Filter "rclone.exe" -ErrorAction SilentlyContinue |
-    Select-Object -First 1
-  if ($kandidat) { return $kandidat.FullName }
+  $link = Join-Path $env:LOCALAPPDATA "Microsoft\WinGet\Links\rclone.exe"
+  if (Test-Path -LiteralPath $link) { return $link }
   return $null
 }
 
@@ -57,15 +62,13 @@ $tujuan = "${Remote}:"
 # menganggapnya error fatal, padahal belum tentu gagal. Jadi dari sini kegagalan
 # diperiksa lewat $LASTEXITCODE, bukan lewat aliran error PowerShell.
 $ErrorActionPreference = "Continue"
-& $rclone copy $arsip.FullName $tujuan --drive-use-trash=false --log-level ERROR 2>&1 | ForEach-Object { "   $_" }
+& $rclone copy $arsip.FullName $tujuan --log-level ERROR 2>&1 | ForEach-Object { "   $_" }
 if ($LASTEXITCODE -ne 0) {
   Write-Host "   GAGAL mengunggah (arsip lokal tetap ada). Periksa otorisasi: rclone config reconnect ${Remote}:"
   exit 1
 }
 
-# Verifikasi mandiri: ukuran di Drive harus sama persis dengan berkas lokal.
-# Tanpa ini, "tidak ada error" tidak membuktikan berkasnya benar-benar utuh --
-# berkas kosong atau terpotong juga bisa selesai tanpa error.
+# Verifikasi ukuran.
 $ukuranDrive = $null
 foreach ($baris in (& $rclone lsf $tujuan --format "sp" --log-level ERROR 2>$null)) {
   if ($baris -match '^(\d+);(.+)$' -and $Matches[2] -eq $arsip.Name) {
@@ -76,11 +79,30 @@ foreach ($baris in (& $rclone lsf $tujuan --format "sp" --log-level ERROR 2>$nul
 if ($null -eq $ukuranDrive) {
   Write-Host "   GAGAL: berkas tidak ditemukan di Drive setelah unggah"
   exit 1
-} elseif ($ukuranDrive -ne $arsip.Length) {
+}
+if ($ukuranDrive -ne $arsip.Length) {
   Write-Host ("   GAGAL: ukuran berbeda -- lokal {0} byte, Drive {1} byte" -f $arsip.Length, $ukuranDrive)
   exit 1
+}
+
+# Verifikasi isi dengan hash. Google Drive mendukung MD5; kalau hash tidak
+# tersedia, ukuran tetap menjadi batas minimum dan dicatat sebagai peringatan.
+$localHash = (Get-FileHash -LiteralPath $arsip.FullName -Algorithm MD5).Hash.ToLowerInvariant()
+$remoteHash = $null
+foreach ($baris in (& $rclone hashsum MD5 $tujuan --include $arsip.Name --log-level ERROR 2>$null)) {
+  if ($baris -match '^([0-9a-f]{32})\s+(.+)$' -and $Matches[2] -eq $arsip.Name) {
+    $remoteHash = $Matches[1]
+  }
+}
+
+if ($remoteHash) {
+  if ($remoteHash -ne $localHash) {
+    Write-Host "   GAGAL: hash Drive berbeda dari berkas lokal"
+    exit 1
+  }
+  Write-Host ("   terverifikasi: MD5 {0}" -f $localHash)
 } else {
-  Write-Host ("   terverifikasi: {0} byte, sama persis dengan berkas lokal" -f $ukuranDrive)
+  Write-Host ("   ukuran cocok ({0} byte); hash remote tidak tersedia" -f $ukuranDrive)
 }
 
 Write-Host ""
@@ -90,10 +112,17 @@ $daftar = & $rclone lsf $tujuan --files-only --log-level ERROR 2>$null |
   Sort-Object -Descending
 Write-Host ("   ada {0} arsip di Drive" -f ($daftar | Measure-Object).Count)
 $buang = $daftar | Select-Object -Skip $KeepOnDrive
+$gagalHapus = $false
 foreach ($f in $buang) {
-  & $rclone deletefile "${tujuan}${f}" --drive-use-trash=false --log-level ERROR 2>&1 | Out-Null
-  Write-Host "   hapus di Drive: $f"
+  & $rclone deletefile "${tujuan}${f}" --log-level ERROR 2>&1 | Out-Null
+  if ($LASTEXITCODE -ne 0) {
+    Write-Host "   GAGAL hapus di Drive: $f"
+    $gagalHapus = $true
+  } else {
+    Write-Host "   hapus di Drive: $f"
+  }
 }
+if ($gagalHapus) { exit 1 }
 
 Write-Host ""
 Write-Host "=== selesai ==="
@@ -102,8 +131,4 @@ Write-Host "=== selesai ==="
   Sort-Object -Descending |
   ForEach-Object { "   Drive: $_" }
 
-# Keluar dengan 0 secara eksplisit. rclone menulis ke stderr pada beberapa tahap,
-# dan itu membuat PowerShell mengakhiri proses dengan kode 1 walaupun semuanya
-# berhasil -- pemanggil mana pun akan salah membacanya sebagai kegagalan.
-# Kegagalan sungguhan sudah ditangani dengan exit 1 di tempatnya masing-masing.
 exit 0
