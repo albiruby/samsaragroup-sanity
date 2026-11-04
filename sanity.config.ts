@@ -107,7 +107,6 @@ const sharedConfig = {
               ),
           ]),
     }),
-    visionTool(),
   ],
 
   schema: {
@@ -143,5 +142,8 @@ export default defineConfig([
     title: 'Samsara Group (Staging)',
     dataset: 'staging',
     basePath: '/staging',
+    // Vision lets a signed-in editor run arbitrary GROQ, including against
+    // drafts, so it stays out of the production workspace and lives here only.
+    plugins: [...sharedConfig.plugins, visionTool()],
   },
 ])

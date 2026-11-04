@@ -77,6 +77,7 @@ const MENU_PANEL = defineArrayMember({
       title: "Download / Open URL",
       type: "url",
       description: "Opsional. Untuk tombol unduh menu PDF (mis. Google Drive).",
+      validation: (rule) => rule.uri({ scheme: ["https"] }),
     }),
   ],
   preview: {
@@ -460,6 +461,7 @@ export default defineType({
       type: "url",
       group: "contact",
       description: "Tampil sebagai tombol INSTAGRAM full-width di halaman brand.",
+      validation: (rule) => rule.uri({ scheme: ["https"] }),
     }),
     defineField({
       name: "ctas",
@@ -493,7 +495,7 @@ export default defineType({
               name: "url",
               title: "URL",
               type: "url",
-              validation: (rule) => rule.required(),
+              validation: (rule) => rule.required().uri({ scheme: ["https"] }),
             }),
           ],
           preview: {

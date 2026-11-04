@@ -96,7 +96,20 @@ export default defineType({
       type: "string",
       group: "about",
       description: "Alamat tujuan tombol, e.g. /about",
-      validation: (rule) => rule.max(120),
+      validation: (rule) =>
+        rule.max(120).custom((value) => {
+          if (!value) return true;
+          if (value.startsWith("/") && !value.startsWith("//") && !value.includes("\\")) {
+            return true;
+          }
+          try {
+            return new URL(value).protocol === "https:"
+              ? true
+              : "Gunakan path relatif (mis. /about) atau URL https.";
+          } catch {
+            return "Gunakan path relatif (mis. /about) atau URL https.";
+          }
+        }),
     }),
     defineField({
       name: "aboutImage",

@@ -66,12 +66,28 @@ $line = "$(Get-Date -Format 'yyyy-MM-dd HH:mm')  OK     $Dataset-$stamp.tar.gz  
 Add-Content -Path $log -Value $line
 Write-Host $line
 
+# Tanggal di nama arsip adalah tanggal ekspor. LastWriteTime berubah kalau berkas
+# pernah disalin atau dipulihkan, jadi purge harus membaca tanggal dari namanya.
+function Get-ArchiveDate([string]$Name) {
+  # Older archives used HHmm, newer ones use HHmmss, so accept both.
+  if ($Name -match "^$([regex]::Escape($Dataset))-(\d{4}-\d{2}-\d{2})_\d{4,6}\.tar\.gz$") {
+    return [datetime]::ParseExact($Matches[1], "yyyy-MM-dd", [Globalization.CultureInfo]::InvariantCulture)
+  }
+  return $null
+}
+
 if ($cutoff) {
   Get-ChildItem $OutDir -Filter "$Dataset-*.tar.gz" |
-    Where-Object { $_.LastWriteTime -lt $cutoff } |
     ForEach-Object {
-      Remove-Item -LiteralPath $_.FullName -Force
-      Write-Host "  hapus arsip sebelum $($cutoff.ToString('yyyy-MM-dd')): $($_.Name)"
+      $archiveDate = Get-ArchiveDate $_.Name
+      if ($null -eq $archiveDate) {
+        Write-Host "  lewati, nama tidak dikenali: $($_.Name)"
+        return
+      }
+      if ($archiveDate -lt $cutoff) {
+        Remove-Item -LiteralPath $_.FullName -Force
+        Write-Host "  hapus arsip sebelum $($cutoff.ToString('yyyy-MM-dd')): $($_.Name)"
+      }
     }
 }
 
