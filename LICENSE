@@ -1,0 +1,19 @@
+Lisensi Proprietary — Seluruh Hak Dilindungi
+============================================
+
+Copyright (c) 2026 Samsara Group
+
+Seluruh isi repositori ini — kode sumber, konten, gambar, tipografi, dan aset
+lainnya — adalah milik Samsara Group dan dilindungi undang-undang.
+
+Tidak ada bagian dari repositori ini yang boleh disalin, dimodifikasi,
+digabungkan, diterbitkan, didistribusikan, disublisensikan, atau digunakan
+dalam bentuk apa pun, baik sebagian maupun seluruhnya, tanpa izin tertulis
+terlebih dahulu dari Samsara Group.
+
+Repositori ini ditampilkan untuk keperluan dokumentasi dan serah terima
+proyek. Ketersediaan kode secara publik tidak berarti pemberian lisensi.
+
+Repositori ini bergantung pada Sanity Studio dan paket pihak ketiga lain yang
+tetap tunduk pada lisensi masing-masing, sebagaimana tercatat di dalam berkas
+package-lock.json.
