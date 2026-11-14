@@ -456,6 +456,14 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "whatsapp",
+      title: "WhatsApp Number",
+      type: "string",
+      group: "contact",
+      description:
+        "Nomor WhatsApp brand seperti yang ditampilkan, mis. 0812-3456-7890 atau +62 812-3456-7890. Tampil di section FIND US.",
+    }),
+    defineField({
       name: "instagramUrl",
       title: "Instagram URL",
       type: "url",
