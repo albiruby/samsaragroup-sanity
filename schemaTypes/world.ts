@@ -58,34 +58,12 @@ const MENU_PANEL = defineArrayMember({
       description: "Gambar halaman menu. Bisa di-zoom dengan klik.",
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: "layout",
-      title: "Layout",
-      type: "string",
-      initialValue: "zoomable",
-      options: {
-        layout: "radio",
-        direction: "horizontal",
-        list: [
-          { title: "Zoomable viewer (klik untuk zoom)", value: "zoomable" },
-          { title: "Full page (tanpa border)", value: "fullpage" },
-        ],
-      },
-    }),
-    defineField({
-      name: "downloadUrl",
-      title: "Download / Open URL",
-      type: "url",
-      description: "Opsional. Untuk tombol unduh menu PDF (mis. Google Drive).",
-      validation: (rule) => rule.uri({ scheme: ["https"] }),
-    }),
   ],
   preview: {
-    select: { title: "tabLabel", media: "image", layout: "layout" },
-    prepare({ title, media, layout }: { title?: string; media?: unknown; layout?: string }) {
+    select: { title: "tabLabel", media: "image" },
+    prepare({ title, media }: { title?: string; media?: unknown }) {
       return {
         title: title || "Menu Panel",
-        subtitle: layout === "fullpage" ? "Full page" : "Zoomable",
         media: media as never,
       };
     },
