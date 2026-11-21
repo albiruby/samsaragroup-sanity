@@ -1,9 +1,19 @@
 {
   "name": "samsara-group-studio",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "description": "Sanity Studio untuk Samsara Group — schema konten, dua workspace, dan skrip backup dataset.",
   "main": "package.json",
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albiruby/samsaragroup-sanity.git"
+  },
+  "homepage": "https://samsaragroup.sanity.studio",
+  "bugs": {
+    "url": "https://github.com/albiruby/samsaragroup-sanity/issues"
+  },
+  "packageManager": "npm@11.19.1",
   "scripts": {
     "build": "sanity build",
     "deploy": "sanity deploy",

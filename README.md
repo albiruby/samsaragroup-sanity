@@ -43,7 +43,7 @@ npm run dev        # http://localhost:3333
 
 | Path | Isi |
 |---|---|
-| `schemaTypes/` | sembilan schema dokumen dan objek, diekspor lewat `index.ts` |
+| `schemaTypes/` | sepuluh schema dokumen dan objek, diekspor lewat `index.ts` |
 | `components/` | input kustom, mis. `SuggestionTextInput` untuk saran teks |
 | `scripts/` | backup dataset (`backup-dataset.ps1`, `backup-and-upload.ps1`) |
 | `sanity.config.ts` | dua workspace, struktur panel "Content by Page", template dokumen |
