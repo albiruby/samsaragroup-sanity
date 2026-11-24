@@ -25,17 +25,17 @@ const sharedConfig = {
           .items([
             S.listItem()
               .id('home-page-item')
-              .title('Home Page — teks & gambar (→ /)')
+              .title('Home Page — Hero, About Us, Our Brands')
               .child(
                 S.document()
                   .schemaType('homePage')
                   .documentId('homePage')
-                  .title('Home Page — hero, About Us, Our Brands'),
+                  .title('Home Page — Hero, About Us, Our Brands'),
               ),
             S.divider(),
             S.listItem()
               .id('home-marquee')
-              .title('Home Page — Rolling Gallery (marquee homepage)')
+              .title('Home Page — Rolling Gallery')
               .child(
                 carouselList(S, {
                   id: 'home-rolling',
@@ -47,63 +47,63 @@ const sharedConfig = {
             S.divider(),
             S.listItem()
               .id('world-item')
-              .title('Brands & Brand Pages — World (Thumbnail, Hero Carousel, Teks)')
+              .title('Brands & Brand Pages — World')
               .child(
                 S.documentTypeList('world')
                   .id('world-list')
-                  .title('World — isi field Image (Thumbnail), Gallery (Hero Carousel), Tagline/Description/Specs'),
+                  .title('World — Thumbnail, Hero Carousel & Konten Halaman'),
               ),
             S.divider(),
             S.listItem()
               .id('brand-nav-item')
-              .title('Header Menu — BRANDS Dropdown (→ semua halaman)')
+              .title('Header Menu — BRANDS Dropdown')
               .child(
                 S.document()
                   .schemaType('brandNav')
                   .documentId('brandNav')
-                  .title('BRANDS Dropdown — baris & urutan menu BRANDS'),
+                  .title('BRANDS Dropdown — Baris & Urutan Menu'),
               ),
             S.divider(),
             S.listItem()
               .id('events-item')
-              .title('Events Page — Event (→ /events)')
-              .child(S.documentTypeList('event').id('events-list').title('Event — Events Page')),
+              .title('Events Page — Event')
+              .child(S.documentTypeList('event').id('events-list').title('Events — Daftar Event')),
             S.listItem()
               .id('events-page-item')
-              .title('Events Page — teks halaman (→ /events)')
+              .title('Events Page — Teks Halaman')
               .child(
                 S.document()
                   .schemaType('eventsPage')
                   .documentId('eventsPage')
-                  .title('Events Page — judul, pesan saat kosong, SEO'),
+                  .title('Events Page — Hero, Empty State & SEO'),
               ),
             S.divider(),
             S.listItem()
               .id('career-item')
-              .title('Career Page — Career (→ /career)')
+              .title('Career Page — Career')
               .child(
                 S.documentTypeList('career')
                   .id('career-list')
-                  .title('Career — daftar lowongan (1 dokumen = 1 lowongan)'),
+                  .title('Career — Daftar Lowongan'),
               ),
             S.listItem()
               .id('career-page-item')
-              .title('Career Page — teks halaman (→ /career)')
+              .title('Career Page — Teks Halaman')
               .child(
                 S.document()
                   .schemaType('careerPage')
                   .documentId('careerPage')
-                  .title('Career Page — hero, judul daftar, Google Form, SEO'),
+                  .title('Career Page — Hero, Listings, Apply & SEO'),
               ),
             S.divider(),
             S.listItem()
               .id('contact-item')
-              .title('Contact Page — Contact Info (→ /contact)')
+              .title('Contact Page — Contact Info')
               .child(
                 S.document()
                   .schemaType('contactInfo')
                   .documentId('contactInfo')
-                  .title('Contact Info — WhatsApp, alamat, jam'),
+                  .title('Contact Info — WhatsApp, Alamat & Jam Operasional'),
               ),
           ]),
     }),

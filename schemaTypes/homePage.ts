@@ -12,11 +12,11 @@ export default defineType({
   title: "Home Page",
   type: "document",
   description:
-    "Teks dan gambar halaman depan. SATU dokumen untuk seluruh halaman. Beberapa field punya dua bagian judul karena di halaman tampil sebagai dua baris dengan warna berbeda. Field yang dikosongkan otomatis memakai nilai bawaan di kode.",
+    "Teks dan gambar halaman depan. Satu dokumen untuk seluruh halaman. Beberapa field punya dua bagian judul karena tampil sebagai dua baris dengan warna berbeda. Field yang dikosongkan otomatis memakai nilai bawaan di kode.",
   groups: [
-    { name: "hero", title: "1 - Hero", default: true },
-    { name: "about", title: "2 - About Us" },
-    { name: "brands", title: "3 - Our Brands" },
+    { name: "hero", title: "1 — Hero", default: true },
+    { name: "about", title: "2 — About Us" },
+    { name: "brands", title: "3 — Our Brands" },
   ],
   fields: [
     defineField({
@@ -58,7 +58,7 @@ export default defineType({
       title: "Eyebrow",
       type: "string",
       group: "about",
-      description: "Label kecil di atas judul, e.g. ABOUT US.",
+      description: "Label kecil di atas judul. Contoh: ABOUT US.",
       validation: (rule) => rule.max(40),
     }),
     defineField({
@@ -66,6 +66,7 @@ export default defineType({
       title: "Heading — Baris 1",
       type: "string",
       group: "about",
+      description: "Baris pertama judul bagian About Us.",
       validation: (rule) => rule.max(60),
     }),
     defineField({
@@ -73,6 +74,7 @@ export default defineType({
       title: "Heading — Baris 2",
       type: "string",
       group: "about",
+      description: "Baris kedua judul bagian About Us.",
       validation: (rule) => rule.max(60),
     }),
     defineField({
@@ -81,13 +83,14 @@ export default defineType({
       type: "text",
       rows: 4,
       group: "about",
+      description: "Paragraf bagian About Us. Kosongkan untuk memakai teks bawaan website.",
     }),
     defineField({
       name: "aboutCtaLabel",
       title: "Button Label",
       type: "string",
       group: "about",
-      description: "e.g. MORE ABOUT US",
+      description: "Contoh: MORE ABOUT US.",
       validation: (rule) => rule.max(40),
     }),
     defineField({
@@ -95,7 +98,7 @@ export default defineType({
       title: "Button Link",
       type: "string",
       group: "about",
-      description: "Alamat tujuan tombol, e.g. /about",
+      description: "Alamat tujuan tombol. Contoh: /about.",
       validation: (rule) =>
         rule.max(120).custom((value) => {
           if (!value) return true;
@@ -125,6 +128,7 @@ export default defineType({
       title: "Image Alt Text",
       type: "string",
       group: "about",
+      description: "Deskripsi gambar untuk pembaca layar dan SEO.",
       validation: (rule) => rule.max(120),
     }),
 
@@ -133,7 +137,7 @@ export default defineType({
       title: "Eyebrow",
       type: "string",
       group: "brands",
-      description: "Label kecil di atas judul, e.g. OUR BRANDS.",
+      description: "Label kecil di atas judul. Contoh: OUR BRANDS.",
       validation: (rule) => rule.max(40),
     }),
     defineField({
@@ -141,6 +145,7 @@ export default defineType({
       title: "Heading",
       type: "string",
       group: "brands",
+      description: "Judul bagian Our Brands.",
       validation: (rule) => rule.max(60),
     }),
     defineField({
@@ -149,6 +154,7 @@ export default defineType({
       type: "text",
       rows: 3,
       group: "brands",
+      description: "Paragraf bagian Our Brands. Kosongkan untuk memakai teks bawaan website.",
     }),
     defineField({
       name: "brandsCounterLabel",
@@ -156,7 +162,7 @@ export default defineType({
       type: "string",
       group: "brands",
       description:
-        "Keterangan di samping angka jumlah brand. Angkanya dihitung otomatis dari daftar brand, jadi cukup tulis kalimatnya, e.g. worlds under one group.",
+        "Keterangan di samping angka jumlah brand. Angkanya dihitung otomatis dari daftar brand, jadi cukup tulis kalimatnya. Contoh: worlds under one group.",
       validation: (rule) => rule.max(60),
     }),
   ],

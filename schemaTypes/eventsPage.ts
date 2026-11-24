@@ -5,11 +5,11 @@ export default defineType({
   title: "Events Page",
   type: "document",
   description:
-    "Isi halaman /events. SATU dokumen untuk seluruh halaman — label kecil di atas judul, judul besar, pesan saat belum ada event, dan SEO. Event-nya sendiri ada di dokumen Event.",
+    "Isi halaman /events. Satu dokumen untuk seluruh halaman — label kecil di atas judul, judul besar, pesan saat belum ada event, dan SEO. Event-nya sendiri ada di dokumen Event.",
   groups: [
-    { name: "hero", title: "1 - Hero", default: true },
-    { name: "empty", title: "2 - Saat Belum Ada Event" },
-    { name: "seo", title: "3 - SEO" },
+    { name: "hero", title: "1 — Hero", default: true },
+    { name: "empty", title: "2 — Saat Belum Ada Event" },
+    { name: "seo", title: "3 — SEO" },
   ],
   fields: [
     defineField({
@@ -32,7 +32,7 @@ export default defineType({
     }),
     defineField({
       name: "emptyMessage",
-      title: "Pesan saat belum ada event",
+      title: "Pesan Saat Belum Ada Event",
       type: "string",
       group: "empty",
       description:

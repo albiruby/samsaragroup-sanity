@@ -10,7 +10,7 @@ export default defineType({
   title: "Contact Info",
   type: "document",
   description:
-    "INPUT: WhatsApp, alamat, jam → OUTPUT: blok kontak di halaman /contact. Satu dokumen untuk seluruh halaman. Field yang dikosongkan otomatis memakai nilai bawaan website.",
+    "Input: WhatsApp, alamat, jam → Output: blok kontak di halaman /contact. Satu dokumen untuk seluruh halaman. Field yang dikosongkan otomatis memakai nilai bawaan website.",
   fields: [
     defineField({
       name: "whatsapp",
@@ -26,14 +26,14 @@ export default defineType({
               name: "label",
               title: "Nama Brand",
               type: "string",
-              description: "e.g. Samsara",
+              description: "Contoh: Samsara.",
               validation: (rule) => rule.required().max(40),
             },
             {
               name: "city",
               title: "Kota",
               type: "string",
-              description: "Tampil kecil di samping nama, e.g. Bogor.",
+              description: "Tampil kecil di samping nama. Contoh: Bogor.",
               components: { input: CITY_FIELD },
               validation: (rule) => rule.max(40),
             },
@@ -42,7 +42,7 @@ export default defineType({
               title: "Nomor Tampil",
               type: "string",
               description:
-                "Nomor yang dilihat pembaca, boleh pakai garis. e.g. +62 852-8127-1988",
+                "Nomor yang dilihat pembaca, boleh pakai garis. Contoh: +62 852-8127-1988.",
               validation: (rule) => rule.required().max(24),
             },
             {
@@ -50,7 +50,7 @@ export default defineType({
               title: "Nomor untuk Link wa.me",
               type: "string",
               description:
-                "Hanya angka, tanpa '+', tanpa spasi, tanpa garis. e.g. 6285281271988",
+                "Hanya angka, tanpa '+', tanpa spasi, tanpa garis. Contoh: 6285281271988.",
               validation: (rule) =>
                 rule
                   .required()
@@ -90,7 +90,7 @@ export default defineType({
       name: "hours",
       title: "Jam Operasional",
       type: "string",
-      description: "e.g. Mon–Sat: 09:00–18:00 · Sun: By appointment",
+      description: "Contoh: Mon–Sat: 09:00–18:00 · Sun: By appointment.",
     }),
   ],
   preview: {

@@ -13,12 +13,12 @@ export default defineType({
   title: "About Page",
   type: "document",
   description:
-    "Isi halaman /about. SATU dokumen untuk seluruh halaman — hero, vision, enam kartu philosophy, dan SEO.",
+    "Isi halaman /about. Satu dokumen untuk seluruh halaman — Hero, Vision, enam kartu Philosophy, dan SEO.",
   groups: [
-    { name: "hero", title: "1 - Hero", default: true },
-    { name: "vision", title: "2 - Vision" },
-    { name: "philosophy", title: "3 - Philosophy" },
-    { name: "seo", title: "4 - SEO" },
+    { name: "hero", title: "1 — Hero", default: true },
+    { name: "vision", title: "2 — Vision" },
+    { name: "philosophy", title: "3 — Philosophy" },
+    { name: "seo", title: "4 — SEO" },
   ],
   fields: [
     defineField({
@@ -35,6 +35,7 @@ export default defineType({
       title: "Headline — Baris 1",
       type: "string",
       group: "hero",
+      description: "Baris pertama headline halaman About.",
       validation: (rule) => rule.required().max(60),
     }),
     defineField({
@@ -42,6 +43,7 @@ export default defineType({
       title: "Headline — Baris 2",
       type: "string",
       group: "hero",
+      description: "Baris kedua headline halaman About.",
       validation: (rule) => rule.required().max(60),
     }),
     defineField({
@@ -67,6 +69,7 @@ export default defineType({
       title: "Hero Image Alt Text",
       type: "string",
       group: "hero",
+      description: "Deskripsi gambar untuk pembaca layar dan SEO.",
       validation: (rule) => rule.max(120),
     }),
 
@@ -92,6 +95,7 @@ export default defineType({
       type: "text",
       rows: 3,
       group: "vision",
+      description: "Paragraf bagian Vision. Kosongkan untuk memakai teks bawaan website.",
     }),
 
     defineField({

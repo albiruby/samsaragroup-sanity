@@ -32,7 +32,7 @@ const ROW = defineArrayMember({
     prepare({ title, brands }: { title?: string; brands?: unknown[] }) {
       const count = Array.isArray(brands) ? brands.length : 0;
       return {
-        title: title || "Row (judul kosong — pakai Tagline brand)",
+        title: title || "Row — Judul Kosong (Pakai Tagline Brand)",
         subtitle: count ? `${count} brand` : "Belum ada brand",
       };
     },
@@ -44,10 +44,10 @@ export default defineType({
   title: "BRANDS Dropdown",
   type: "document",
   description:
-    "Isi dropdown BRANDS di header (desktop & popup mobile). Dokumen ini yang menentukan urutan baris dan brand apa saja yang tampil. Hanya perlu satu dokumen.",
+    "Isi dropdown BRANDS di header (desktop & popup mobile). Dokumen ini yang menentukan urutan baris dan brand apa saja yang tampil. Cukup satu dokumen.",
   groups: [
-    { name: "rows", title: "1 - Dropdown Rows", default: true },
-    { name: "labels", title: "2 - Labels" },
+    { name: "rows", title: "1 — Dropdown Rows", default: true },
+    { name: "labels", title: "2 — Labels" },
   ],
   fields: [
     defineField({
@@ -74,7 +74,7 @@ export default defineType({
       type: "string",
       group: "labels",
       initialValue: "Hover a brand",
-      description: "Tampil kalau tidak ada baris yang aktif.",
+      description: "Tampil jika tidak ada baris yang aktif.",
       validation: (rule) => rule.max(40),
     }),
   ],

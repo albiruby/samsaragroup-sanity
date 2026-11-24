@@ -47,12 +47,12 @@ export default defineType({
   title: "Career",
   type: "document",
   description:
-    "Satu dokumen = satu lowongan. INPUT: title, department, location, type, description → OUTPUT: kartu di /career + filter departemen. Link Apply diarahkan ke Google Form.",
+    "Satu dokumen = satu lowongan. Input: title, department, location, type, description → Output: kartu di /career + filter departemen. Link Apply diarahkan ke Google Form.",
   groups: [
-    { name: "role", title: "1 - Role", default: true },
-    { name: "detail", title: "2 - Description" },
-    { name: "apply", title: "3 - Apply" },
-    { name: "publishing", title: "4 - Publishing" },
+    { name: "role", title: "1 — Role", default: true },
+    { name: "detail", title: "2 — Description" },
+    { name: "apply", title: "3 — Apply" },
+    { name: "publishing", title: "4 — Publishing" },
   ],
   fields: [
     defineField({
@@ -60,7 +60,7 @@ export default defineType({
       title: "Job Title",
       type: "string",
       group: "role",
-      description: "e.g. Barista. Tampil besar di kartu lowongan.",
+      description: "Contoh: Barista. Tampil besar di kartu lowongan.",
       validation: (rule) => rule.required().max(80),
     }),
     defineField({
@@ -104,7 +104,7 @@ export default defineType({
       title: "Location",
       type: "string",
       group: "role",
-      description: "e.g. Bogor. Tampil sebagai chip di kartu.",
+      description: "Contoh: Bogor. Tampil sebagai chip di kartu.",
       validation: (rule) => rule.required().max(60),
     }),
     defineField({
@@ -112,6 +112,7 @@ export default defineType({
       title: "Employment Type",
       type: "string",
       group: "role",
+      description: "Status kerja: Full-time, Part-time, Contract, atau Internship.",
       initialValue: "full-time",
       options: { layout: "radio", direction: "horizontal", list: EMPLOYMENT_TYPES },
       validation: (rule) => rule.required(),
@@ -139,7 +140,7 @@ export default defineType({
       type: "array",
       group: "detail",
       of: [REQUIREMENT],
-      description: "Syarat Qualifications. Kosongkan jika lowongan tidak punya daftar syarat.",
+      description: "Daftar syarat/qualification. Kosongkan jika lowongan tidak punya daftar syarat.",
     }),
     defineField({
       name: "applyUrl",

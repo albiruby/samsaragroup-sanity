@@ -12,7 +12,7 @@ export default defineType({
   name: "event",
   title: "Event",
   type: "document",
-  description: "INPUT: title, date, category, image, dll. → OUTPUT: kartu event di halaman /events. Detail diarahkan lewat field Link.",
+  description: "Input: title, date, category, image, dll. → Output: kartu event di halaman /events. Detail diarahkan lewat field Link.",
   fields: [
     defineField({
       name: "title",
@@ -40,25 +40,25 @@ export default defineType({
       name: "time",
       title: "Time",
       type: "string",
-      description: "e.g. 19:00 – 00:00",
+      description: "Contoh: 19:00 – 00:00.",
     }),
     defineField({
       name: "location",
       title: "Location",
       type: "string",
-      description: "e.g. Svarga Estate, Canggu",
+      description: "Contoh: Svarga Estate, Canggu.",
     }),
     defineField({
       name: "capacity",
       title: "Capacity",
       type: "string",
-      description: "e.g. 24 guests",
+      description: "Contoh: 24 guests.",
     }),
     defineField({
       name: "entry",
       title: "Entry",
       type: "string",
-      description: "e.g. By invitation only",
+      description: "Contoh: By invitation only.",
     }),
     defineField({
       name: "description",
@@ -78,7 +78,7 @@ export default defineType({
       name: "link",
       title: "Link",
       type: "url",
-      description: "External link (e.g. Instagram, ticketing, registration)",
+      description: "Tautan eksternal (contoh: Instagram, ticketing, registration).",
       validation: (rule) => rule.uri({ allowRelative: false }),
     }),
     defineField({

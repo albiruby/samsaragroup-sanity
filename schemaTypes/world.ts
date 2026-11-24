@@ -22,14 +22,14 @@ const SPEC_ROW = defineArrayMember({
       name: "label",
       title: "Label",
       type: "string",
-      description: "Kiri tabel, e.g. Concept, Hours, Heritage",
+      description: "Kiri tabel. Contoh: Concept, Hours, Heritage.",
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "value",
       title: "Value",
       type: "string",
-      description: "Kanan tabel, e.g. Culinary & Hearth",
+      description: "Kanan tabel. Contoh: Culinary & Hearth.",
       validation: (rule) => rule.required(),
     }),
   ],
@@ -47,7 +47,7 @@ const MENU_PANEL = defineArrayMember({
       name: "tabLabel",
       title: "Tab Label",
       type: "string",
-      description: "Label tab di desktop, e.g. Food, Beverages, Page 1",
+      description: "Label tab di desktop. Contoh: Food, Beverages, Page 1.",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -79,7 +79,7 @@ const FEATURE_CARD = defineArrayMember({
       name: "title",
       title: "Title",
       type: "string",
-      description: "e.g. PROTEIN",
+      description: "Contoh: PROTEIN.",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -87,7 +87,7 @@ const FEATURE_CARD = defineArrayMember({
       title: "Copy",
       type: "text",
       rows: 3,
-      description: "Paragraf pendek di bawah judul",
+      description: "Paragraf pendek di bawah judul.",
       validation: (rule) => rule.required(),
     }),
   ],
@@ -149,17 +149,17 @@ export default defineType({
   title: "World",
   type: "document",
   description:
-    "Satu dokumen = satu brand. SEMUA elemen halaman brand diatur dari sini: teks, gambar, peta, menu, tombol. Tambah brand baru cukup buat dokumen lalu isi - tidak perlu ubah kode.",
+    "Satu dokumen = satu brand. Semua elemen halaman brand diatur dari sini: teks, gambar, peta, menu, tombol. Tambah brand baru cukup buat dokumen lalu isi — tidak perlu ubah kode.",
   groups: [
-    { name: "identity", title: "1 - Identity", default: true },
-    { name: "listing", title: "2 - Listing & Navigation" },
-    { name: "hero", title: "3 - Hero & Copy" },
-    { name: "sections", title: "4 - Sections" },
-    { name: "menu", title: "5 - Menu" },
-    { name: "location", title: "6 - Location & Map" },
-    { name: "contact", title: "7 - Contact & Links" },
-    { name: "seo", title: "8 - SEO" },
-    { name: "publishing", title: "9 - Publishing" },
+    { name: "identity", title: "1 — Identity", default: true },
+    { name: "listing", title: "2 — Listing & Navigation" },
+    { name: "hero", title: "3 — Hero & Copy" },
+    { name: "sections", title: "4 — Sections" },
+    { name: "menu", title: "5 — Menu" },
+    { name: "location", title: "6 — Location & Map" },
+    { name: "contact", title: "7 — Contact & Links" },
+    { name: "seo", title: "8 — SEO" },
+    { name: "publishing", title: "9 — Publishing" },
   ],
   fields: [
     defineField({
@@ -176,7 +176,7 @@ export default defineType({
       type: "slug",
       group: "identity",
       description:
-        "Alamat halaman. samsara menjadi /samsara. Jangan diubah setelah live tanpa redirect. Lima slug di bawah dipakai route statis di kode, jadi jangan dipakai untuk brand baru.",
+        "Alamat halaman. Contoh: samsara menjadi /samsara. Jangan diubah setelah live tanpa redirect. Lima slug di bawah dipakai route statis di kode, jadi jangan dipakai untuk brand baru.",
       options: { source: "name", maxLength: 96 },
       validation: (rule) =>
         rule.required().custom((value, context) => {
@@ -198,7 +198,7 @@ export default defineType({
       type: "string",
       group: "listing",
       description:
-        "e.g. The Listening Room. Jadi judul baris di dropdown navigasi BRANDS, dan tampil di kartu /brands serta di bawah judul halaman brand. Wajib diisi agar brand punya judul sendiri di navigasi.",
+        "Contoh: The Listening Room. Jadi judul baris di dropdown navigasi BRANDS, dan tampil di kartu /brands serta di bawah judul halaman brand. Wajib diisi agar brand punya judul sendiri di navigasi.",
       validation: (rule) => rule.max(80),
     }),
     defineField({
@@ -206,7 +206,7 @@ export default defineType({
       title: "Speciality",
       type: "string",
       group: "listing",
-      description: "Baris kecil di dropdown navigasi BRANDS. e.g. Vinyl - Dining - Culture.",
+      description: "Baris kecil di dropdown navigasi BRANDS. Contoh: Vinyl — Dining — Culture.",
       validation: (rule) => rule.max(80),
     }),
     defineField({
@@ -216,7 +216,7 @@ export default defineType({
       group: "listing",
       options: { hotspot: true },
       description:
-        "THUMBNAIL kartu di /brands. Rasio ideal potret 4:5 — potret, bukan landscape. BEDA dari hero carousel di bawah.",
+        "Thumbnail kartu di /brands. Rasio ideal potret 4:5, bukan landscape. Berbeda dari hero carousel di bawah.",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -233,7 +233,7 @@ export default defineType({
       title: "Theme",
       type: "string",
       group: "hero",
-      description: "Mode warna halaman saat header closed.",
+      description: "Mode warna halaman saat header tertutup.",
       initialValue: "dark",
       options: {
         layout: "radio",
@@ -273,7 +273,7 @@ export default defineType({
       type: "array",
       group: "hero",
       description:
-        "Slider besar di atas halaman brand. Hanya 1 gambar? Tampil sebagai gambar lebar tunggal. Kosongkan untuk menyembunyikan carousel.",
+        "Slider besar di atas halaman brand. Hanya satu gambar? Tampil sebagai gambar lebar tunggal. Kosongkan untuk menyembunyikan carousel.",
       of: [GALLERY_ITEM, GALLERY_SLIDE],
       validation: (rule) => rule.max(20),
     }),
@@ -306,11 +306,11 @@ export default defineType({
               options: {
                 layout: "dropdown",
                 list: [
-                  { title: "Text Block - judul + paragraf", value: "text" },
-                  { title: "Specifications - tabel label/value", value: "specs" },
-                  { title: "Feature Cards - grid kartu", value: "features" },
-                  { title: "Menu - viewer halaman menu", value: "menu" },
-                  { title: "Map - peta lokasi", value: "map" },
+                  { title: "Text Block — Judul + Paragraf", value: "text" },
+                  { title: "Specifications — Tabel Label/Value", value: "specs" },
+                  { title: "Feature Cards — Grid Kartu", value: "features" },
+                  { title: "Menu — Viewer Halaman Menu", value: "menu" },
+                  { title: "Map — Peta Lokasi", value: "map" },
                 ],
               },
               validation: (rule) => rule.required(),
@@ -319,7 +319,7 @@ export default defineType({
               name: "heading",
               title: "Heading",
               type: "string",
-              description: "e.g. THE VISION, AT A GLANCE, FIND US",
+              description: "Contoh: THE VISION, AT A GLANCE, FIND US.",
               validation: (rule) => rule.max(40),
             }),
             defineField({
@@ -418,14 +418,14 @@ export default defineType({
               name: "label",
               title: "Label",
               type: "string",
-              description: "mis. Weekdays, Weekend, Mon–Fri",
+              description: "Contoh: Weekdays, Weekend, Mon–Fri.",
               validation: (rule) => rule.required(),
             }),
             defineField({
               name: "value",
               title: "Hours",
               type: "string",
-              description: "e.g. 10:00 - 22:00",
+              description: "Contoh: 10:00 – 22:00.",
               validation: (rule) => rule.required(),
             }),
           ],
@@ -535,7 +535,7 @@ export default defineType({
       type: "boolean",
       group: "publishing",
       description:
-        "Brand unggulan. Tampil di /brands, sebagai baris sendiri di dropdown navigasi (semua halaman), dan di sitemap. PENTING: Featured = false membuat halaman /<slug> mengembalikan 404 — brand hilang total dari situs, bukan hanya dari daftar. Gunakan status Draft jika hanya ingin menyembunyikan tanpaapus dokumen.",
+        "Brand unggulan. Tampil di /brands, sebagai baris sendiri di dropdown navigasi (semua halaman), dan di sitemap. Penting: Featured = false membuat halaman /<slug> mengembalikan 404 — brand hilang total dari situs, bukan hanya dari daftar. Gunakan status Draft jika hanya ingin menyembunyikan tanpa menghapus dokumen.",
       initialValue: true,
     }),
     defineField({

@@ -5,12 +5,12 @@ export default defineType({
   title: "Career Page",
   type: "document",
   description:
-    "Isi halaman /career. SATU dokumen untuk seluruh halaman — teks bagian atas, judul daftar lowongan, dan Google Form default. Lowongannya sendiri ada di dokumen Career.",
+    "Isi halaman /career. Satu dokumen untuk seluruh halaman — teks bagian atas, judul daftar lowongan, dan Google Form default. Lowongannya sendiri ada di dokumen Career.",
   groups: [
-    { name: "hero", title: "1 - Hero", default: true },
-    { name: "listings", title: "2 - Listings" },
-    { name: "apply", title: "3 - Apply" },
-    { name: "seo", title: "4 - SEO" },
+    { name: "hero", title: "1 — Hero", default: true },
+    { name: "listings", title: "2 — Listings" },
+    { name: "apply", title: "3 — Apply" },
+    { name: "seo", title: "4 — SEO" },
   ],
   fields: [
     defineField({
@@ -18,7 +18,7 @@ export default defineType({
       title: "Eyebrow",
       type: "string",
       group: "hero",
-      description: "Label kecil di atas judul, e.g. We're hiring.",
+      description: "Label kecil di atas judul. Contoh: We're hiring.",
       validation: (rule) => rule.max(40),
     }),
     defineField({
@@ -56,7 +56,7 @@ export default defineType({
     }),
     defineField({
       name: "showBrandStrip",
-      title: "Tampilkan strip logo brand",
+      title: "Tampilkan Strip Logo Brand",
       type: "boolean",
       group: "listings",
       initialValue: true,
@@ -64,24 +64,24 @@ export default defineType({
     }),
     defineField({
       name: "positionsHeading",
-      title: "Judul daftar lowongan",
+      title: "Judul Daftar Lowongan",
       type: "string",
       group: "listings",
-      description: "e.g. Currently open positions.",
+      description: "Contoh: Currently open positions.",
       validation: (rule) => rule.required().max(60),
     }),
     defineField({
       name: "emptyHeadline",
-      title: "Judul saat tidak ada lowongan",
+      title: "Judul Saat Tidak Ada Lowongan",
       type: "string",
       group: "listings",
       description:
-        "Tampil besar menggantikan 'Judul daftar lowongan' kalau tidak ada lowongan aktif sama sekali. e.g. No open positions right now.",
+        "Tampil besar menggantikan 'Judul Daftar Lowongan' jika tidak ada lowongan aktif. Contoh: No open positions right now.",
       validation: (rule) => rule.max(60),
     }),
     defineField({
       name: "emptyMessage",
-      title: "Pesan saat lowongan kosong",
+      title: "Pesan Saat Lowongan Kosong",
       type: "string",
       group: "listings",
       description:
@@ -90,7 +90,7 @@ export default defineType({
     }),
     defineField({
       name: "applyUrl",
-      title: "Google Form default",
+      title: "Google Form Default",
       type: "url",
       group: "apply",
       description:
@@ -99,11 +99,11 @@ export default defineType({
     }),
     defineField({
       name: "applyNote",
-      title: "Catatan di bawah daftar",
+      title: "Catatan di Bawah Daftar",
       type: "string",
       group: "apply",
       description:
-        "Satu kalimat penutup, e.g. Don't see the right role? Send us a note. Kosongkan untuk menyembunyikan.",
+        "Satu kalimat penutup. Contoh: Don't see the right role? Send us a note. Kosongkan untuk menyembunyikan.",
       validation: (rule) => rule.max(200),
     }),
     defineField({
