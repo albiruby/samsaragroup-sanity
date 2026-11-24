@@ -1,6 +1,8 @@
-import {defineConfig} from 'sanity'
+import {defineConfig, definePlugin} from 'sanity'
 import {structureTool, type StructureBuilder} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
+import {LaunchIcon} from '@sanity/icons/Launch'
+import {StagingPreviewTool} from './components/StagingPreviewTool'
 import {schemaTypes} from './schemaTypes'
 
 const carouselList = (
@@ -128,6 +130,18 @@ const sharedConfig = {
   },
 }
 
+const stagingPreviewPlugin = definePlugin({
+  name: 'staging-preview',
+  tools: [
+    {
+      name: 'staging-preview',
+      title: 'Lihat Staging',
+      icon: LaunchIcon,
+      component: StagingPreviewTool,
+    },
+  ],
+})
+
 export default defineConfig([
   {
     ...sharedConfig,
@@ -144,6 +158,6 @@ export default defineConfig([
     basePath: '/staging',
     // Vision lets a signed-in editor run arbitrary GROQ, including against
     // drafts, so it stays out of the production workspace and lives here only.
-    plugins: [...sharedConfig.plugins, visionTool()],
+    plugins: [...sharedConfig.plugins, visionTool(), stagingPreviewPlugin()],
   },
 ])
