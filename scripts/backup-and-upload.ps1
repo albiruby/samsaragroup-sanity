@@ -26,7 +26,7 @@ if ($KeepOnDrive -lt 1) { throw "KeepOnDrive minimal 1." }
 
 $here = $PSScriptRoot
 $localScript = Join-Path $here "backup-dataset.ps1"
-$localDir = "D:\Project Website Samsara Group\backups\sanity"
+$localDir = "D:\Project Website Samsara Group\backups\sanity\production"
 
 # rclone bisa belum ada di PATH kalau baru dipasang (butuh shell baru). Jangan
 # mengeksekusi file pertama yang ditemukan di folder user-writable; pakai PATH

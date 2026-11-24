@@ -12,7 +12,7 @@
 # setelah memastikan arsip itu tidak diperlukan (mis. arsip sebelum insiden data).
 
 param(
-  [string]$OutDir = "D:\Project Website Samsara Group\backups\sanity",
+  [string]$OutDir = "D:\Project Website Samsara Group\backups\sanity\production",
   [int]$Keep = 14,
   [string]$Dataset = "production",
   [string]$PurgeBefore = ""
