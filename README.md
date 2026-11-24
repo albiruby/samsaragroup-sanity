@@ -52,9 +52,9 @@ npm run dev        # http://localhost:3333
 ## Backup dataset
 
 `scripts/backup-and-upload.ps1` mengekspor dataset `production`, menyimpannya di folder
-`backups/`, lalu mengunggahnya ke Google Drive. Arsip **tidak boleh** masuk repo ini karena
+`backups/sanity/production/`, lalu mengunggahnya ke Google Drive. Arsip **tidak boleh** masuk repo ini karena
 repositori bersifat publik. Prosedur lengkap, jadwal, dan verifikasi hash ada di
-`docs/DOCUMENTATIONS.md` §12 pada repo website.
+`docs/DOCUMENTATION.md` §12 pada repo website.
 
 ## Lisensi
 
