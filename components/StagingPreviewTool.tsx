@@ -126,7 +126,7 @@ export function StagingPreviewTool() {
         <li>Edit konten di workspace Samsara Group (Staging).</li>
         <li>Klik Publish.</li>
         <li>Buka website staging, tunggu ±60 detik, lalu refresh.</li>
-        <li>Jika muncul login Vercel, minta akses preview ke pemilik project.</li>
+        <li>URL ini bisa dibuka tanpa login Vercel; preview lain tetap terkunci.</li>
       </ol>
     </div>
   );
