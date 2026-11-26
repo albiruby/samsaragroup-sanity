@@ -1,7 +1,7 @@
 {
   "name": "samsara-group-studio",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Sanity Studio untuk Samsara Group — schema konten, dua workspace, dan skrip backup dataset.",
   "main": "package.json",
   "license": "UNLICENSED",

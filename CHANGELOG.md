@@ -3,6 +3,20 @@
 All notable changes to the Samsara Group Studio are recorded here.
 Format: keep the newest release on top. Dates are ISO (`YYYY-MM-DD`).
 
+## 1.0.2 — 2026-11-26
+
+### Added
+
+- **Lihat Staging** tool in the staging workspace, opening the stable Vercel
+  preview branch alias.
+- SEO Title and SEO Description fields on `homePage`.
+
+### Changed
+
+- Standardized page, section, and field labels; em dash separators for
+  structure items and field groups.
+- Clearer Indonesian descriptions for editors, including input/output context.
+
 ## 1.0.1 — 2026-11-21
 
 ### Added

@@ -17,6 +17,7 @@ export default defineType({
     { name: "hero", title: "1 — Hero", default: true },
     { name: "about", title: "2 — About Us" },
     { name: "brands", title: "3 — Our Brands" },
+    { name: "seo", title: "4 — SEO" },
   ],
   fields: [
     defineField({
@@ -164,6 +165,24 @@ export default defineType({
       description:
         "Keterangan di samping angka jumlah brand. Angkanya dihitung otomatis dari daftar brand, jadi cukup tulis kalimatnya. Contoh: worlds under one group.",
       validation: (rule) => rule.max(60),
+    }),
+    defineField({
+      name: "seoTitle",
+      title: "SEO Title",
+      type: "string",
+      group: "seo",
+      description: "Kosongkan untuk memakai 'Samsara Group — Many Identities, One Standard'.",
+      validation: (rule) => rule.max(60),
+    }),
+    defineField({
+      name: "seoDescription",
+      title: "SEO Description",
+      type: "text",
+      rows: 3,
+      group: "seo",
+      description:
+        "Ideal 140-160 karakter. Kosongkan untuk memakai deskripsi bawaan website.",
+      validation: (rule) => rule.max(165),
     }),
   ],
   preview: {

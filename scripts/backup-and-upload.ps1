@@ -1,6 +1,7 @@
 # Backup dataset Samsara ke arsip lokal, lalu unggah arsip terbaru ke Google Drive.
 #
-# Dijalankan saat pemilik situs meminta ("push" atau "backup"), bukan terjadwal.
+# Dijalankan manual, atau otomatis oleh Windows Task Scheduler
+# "Samsara - Sanity Backup" setiap hari pukul 09:00.
 #
 # Pakai:
 #   powershell -ExecutionPolicy Bypass -File scripts\backup-and-upload.ps1
