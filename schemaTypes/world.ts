@@ -13,6 +13,15 @@ const CTA_LIST = [
  */
 const RESERVED_SLUGS = ["samsara", "svarga", "acasa", "outpace", "grove"];
 
+const LOCAL_BUSINESS_TYPES = [
+  { title: "None — no LocalBusiness schema", value: "none" },
+  { title: "LocalBusiness (generic)", value: "LocalBusiness" },
+  { title: "Restaurant", value: "Restaurant" },
+  { title: "Resort", value: "Resort" },
+  { title: "Hotel", value: "Hotel" },
+  { title: "CafeOrCoffeeShop", value: "CafeOrCoffeeShop" },
+];
+
 const SPEC_ROW = defineArrayMember({
   name: "specRow",
   title: "Row",
@@ -45,9 +54,10 @@ const MENU_PANEL = defineArrayMember({
   fields: [
     defineField({
       name: "tabLabel",
-      title: "Tab Label",
+      title: "Page Label",
       type: "string",
-      description: "Label tab di desktop. Contoh: Food, Beverages, Page 1.",
+      description:
+        "Dipakai sebagai alt text gambar dan label di Studio. Website tidak menampilkan tab.",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -126,14 +136,6 @@ const GALLERY_SLIDE = defineArrayMember({
   },
 });
 
-const SECTION_LABELS: Record<string, string> = {
-  text: "Text Block",
-  specs: "Specifications",
-  features: "Feature Cards",
-  menu: "Menu",
-  map: "Map",
-};
-
 const CTA_LABELS: Record<string, string> = {
   reservation: "RESERVATION",
   roomrate: "ROOM RATE",
@@ -149,17 +151,18 @@ export default defineType({
   title: "World",
   type: "document",
   description:
-    "Satu dokumen = satu brand. Semua elemen halaman brand diatur dari sini: teks, gambar, peta, menu, tombol. Tambah brand baru cukup buat dokumen lalu isi — tidak perlu ubah kode.",
+    "Satu dokumen = satu brand. Form ini mengikuti urutan halaman brand: Hero → Intro & Specifications → Feature Cards → Menu → Location. Setiap field punya tempat tetap; tidak ada page builder.",
   groups: [
     { name: "identity", title: "1 — Identity", default: true },
     { name: "listing", title: "2 — Listing & Navigation" },
-    { name: "hero", title: "3 — Hero & Copy" },
-    { name: "sections", title: "4 — Sections" },
-    { name: "menu", title: "5 — Menu" },
-    { name: "location", title: "6 — Location & Map" },
-    { name: "contact", title: "7 — Contact & Links" },
-    { name: "seo", title: "8 — SEO" },
-    { name: "publishing", title: "9 — Publishing" },
+    { name: "hero", title: "3 — Hero" },
+    { name: "intro", title: "4 — Intro & Specifications" },
+    { name: "features", title: "5 — Feature Cards" },
+    { name: "menu", title: "6 — Menu" },
+    { name: "location", title: "7 — Location & Map" },
+    { name: "contact", title: "8 — Contact & Links" },
+    { name: "seo", title: "9 — SEO" },
+    { name: "publishing", title: "10 — Publishing" },
   ],
   fields: [
     defineField({
@@ -198,7 +201,7 @@ export default defineType({
       type: "string",
       group: "listing",
       description:
-        "Contoh: The Listening Room. Jadi judul baris di dropdown navigasi BRANDS, dan tampil di kartu /brands serta di bawah judul halaman brand. Wajib diisi agar brand punya judul sendiri di navigasi.",
+        "Contoh: The Listening Room. Jadi judul baris di dropdown navigasi BRANDS, dan tampil di kartu /brands serta di bawah judul halaman brand. Juga fallback meta description.",
       validation: (rule) => rule.max(80),
     }),
     defineField({
@@ -206,7 +209,8 @@ export default defineType({
       title: "Speciality",
       type: "string",
       group: "listing",
-      description: "Baris kecil di dropdown navigasi BRANDS. Contoh: Vinyl — Dining — Culture.",
+      description:
+        "Baris kecil di dropdown navigasi BRANDS. Contoh: Vinyl — Dining — Culture. Juga fallback meta description.",
       validation: (rule) => rule.max(80),
     }),
     defineField({
@@ -228,21 +232,7 @@ export default defineType({
       description:
         "Logo monochrome (PNG/SVG, transparan). Tampil putih di tengah kartu /brands dan di logo marquee footer. Kosongkan untuk memakai teks nama.",
     }),
-    defineField({
-      name: "theme",
-      title: "Theme",
-      type: "string",
-      group: "hero",
-      description: "Mode warna halaman saat header tertutup.",
-      initialValue: "dark",
-      options: {
-        layout: "radio",
-        list: [
-          { title: "Dark", value: "dark" },
-          { title: "Light", value: "light" },
-        ],
-      },
-    }),
+
     defineField({
       name: "heroEyebrow",
       title: "Hero Eyebrow",
@@ -260,138 +250,111 @@ export default defineType({
       validation: (rule) => rule.max(60),
     }),
     defineField({
-      name: "heroIntro",
-      title: "Hero Intro",
-      type: "text",
-      rows: 3,
-      group: "hero",
-      description: "Paragraf pendek tepat di bawah judul hero.",
-    }),
-    defineField({
       name: "gallery",
       title: "Gallery (Hero Carousel)",
       type: "array",
       group: "hero",
       description:
-        "Slider besar di atas halaman brand. Hanya satu gambar? Tampil sebagai gambar lebar tunggal. Kosongkan untuk menyembunyikan carousel.",
+        "Slider besar di atas halaman brand. Maks 20. Satu gambar tampil sebagai gambar lebar tunggal; dua atau lebih menjadi carousel. Kosongkan untuk menyembunyikan carousel.",
       of: [GALLERY_ITEM, GALLERY_SLIDE],
       validation: (rule) => rule.max(20),
     }),
+
     defineField({
       name: "description",
-      title: "Description",
+      title: "Intro Paragraph",
       type: "text",
-      rows: 4,
-      group: "hero",
+      rows: 5,
+      group: "intro",
       description:
-        "Ringkasan singkat brand. Dipakai untuk SEO description bila SEO Description kosong.",
+        "Paragraf pembuka di blok dua kolom, di atas Specifications. Bukan meta description — isi SEO Description untuk itu.",
     }),
     defineField({
-      name: "sections",
-      title: "Content Sections",
+      name: "specsHeading",
+      title: "Specifications Heading",
+      type: "string",
+      group: "intro",
+      description: "Kosongkan untuk memakai SPECIFICATIONS.",
+      validation: (rule) => rule.max(40),
+    }),
+    defineField({
+      name: "specifications",
+      title: "Specifications",
       type: "array",
-      group: "sections",
-      description:
-        "Blok konten di bawah carousel, urut dari atas ke bawah. Section kosong disembunyikan otomatis.",
-      of: [
-        defineArrayMember({
-          name: "section",
-          title: "Section",
-          type: "object",
-          fields: [
-            defineField({
-              name: "type",
-              title: "Section Type",
-              type: "string",
-              options: {
-                layout: "dropdown",
-                list: [
-                  { title: "Text Block — Judul + Paragraf", value: "text" },
-                  { title: "Specifications — Tabel Label/Value", value: "specs" },
-                  { title: "Feature Cards — Grid Kartu", value: "features" },
-                  { title: "Menu — Viewer Halaman Menu", value: "menu" },
-                  { title: "Map — Peta Lokasi", value: "map" },
-                ],
-              },
-              validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: "heading",
-              title: "Heading",
-              type: "string",
-              description: "Contoh: THE VISION, AT A GLANCE, FIND US.",
-              validation: (rule) => rule.max(40),
-            }),
-            defineField({
-              name: "body",
-              title: "Body Text",
-              type: "text",
-              rows: 5,
-              description: "Dipakai oleh section Text Block. Pisahkan paragraf dengan baris kosong.",
-            }),
-            defineField({
-              name: "specifications",
-              title: "Specifications",
-              type: "array",
-              description: "Dipakai oleh section Specifications.",
-              of: [SPEC_ROW],
-            }),
-            defineField({
-              name: "features",
-              title: "Feature Cards",
-              type: "array",
-              description: "Dipakai oleh section Feature Cards.",
-              of: [FEATURE_CARD],
-            }),
-            defineField({
-              name: "menuPanels",
-              title: "Menu Panels",
-              type: "array",
-              description:
-                "Dipakai oleh section Menu. 1 panel = gambar tunggal, 2 panel = dua kolom, 3+ = pager.",
-              of: [MENU_PANEL],
-            }),
-            defineField({
-              name: "mapLat",
-              title: "Map Latitude",
-              type: "number",
-              description: "Dipakai oleh section Map. Contoh: -6.6167",
-              validation: (rule) => rule.min(-90).max(90),
-            }),
-            defineField({
-              name: "mapLng",
-              title: "Map Longitude",
-              type: "number",
-              description: "Dipakai oleh section Map. Contoh: 106.85",
-              validation: (rule) => rule.min(-180).max(180),
-            }),
-            defineField({
-              name: "mapZoom",
-              title: "Map Zoom",
-              type: "number",
-              description: "1 = dunia, 19 = bangunan. Default 16.",
-              initialValue: 16,
-              validation: (rule) => rule.integer().min(1).max(19),
-            }),
-          ],
-          preview: {
-            select: { title: "heading", type: "type" },
-            prepare({ title, type }: { title?: string; type?: string }) {
-              const label = type ? SECTION_LABELS[type] : undefined;
-              return { title: title || label || "Section", subtitle: label };
-            },
-          },
-        }),
-      ],
+      group: "intro",
+      description: "Tabel label/nilai. Kosongkan untuk menyembunyikan tabel.",
+      of: [SPEC_ROW],
       validation: (rule) => rule.max(12),
     }),
+
+    defineField({
+      name: "featuresHeading",
+      title: "Features Heading",
+      type: "string",
+      group: "features",
+      description: "Judul kecil di atas kartu. Kosongkan untuk menyembunyikan judul.",
+      validation: (rule) => rule.max(40),
+    }),
+    defineField({
+      name: "features",
+      title: "Feature Cards",
+      type: "array",
+      group: "features",
+      description: "Maks 8 kartu. Grid 4 kolom di desktop, 2 di tablet.",
+      of: [FEATURE_CARD],
+      validation: (rule) => rule.max(8),
+    }),
+
     defineField({
       name: "menuHeading",
       title: "Menu Heading",
       type: "string",
       group: "menu",
+      description: "Judul section menu. Kosongkan untuk memakai MENU.",
+      validation: (rule) => rule.max(40),
+    }),
+    defineField({
+      name: "menuPanels",
+      title: "Menu Panels",
+      type: "array",
+      group: "menu",
       description:
-        "Judul bawaan untuk section Menu yang belum diisi Heading sendiri. Default: MENU.",
+        "1 panel = gambar tunggal, 2 panel = dua kolom, 3+ = pager. Panel tanpa gambar diabaikan.",
+      of: [MENU_PANEL],
+    }),
+
+    defineField({
+      name: "mapHeading",
+      title: "Map Heading",
+      type: "string",
+      group: "location",
+      description: "Kosongkan untuk memakai FIND US.",
+      validation: (rule) => rule.max(40),
+    }),
+    defineField({
+      name: "mapLat",
+      title: "Map Latitude",
+      type: "number",
+      group: "location",
+      description: "Contoh: -6.6167",
+      validation: (rule) => rule.min(-90).max(90),
+    }),
+    defineField({
+      name: "mapLng",
+      title: "Map Longitude",
+      type: "number",
+      group: "location",
+      description: "Contoh: 106.85",
+      validation: (rule) => rule.min(-180).max(180),
+    }),
+    defineField({
+      name: "mapZoom",
+      title: "Map Zoom",
+      type: "number",
+      group: "location",
+      description: "1 = dunia, 19 = bangunan. Default 16.",
+      initialValue: 16,
+      validation: (rule) => rule.integer().min(1).max(19),
     }),
     defineField({
       name: "address",
@@ -399,7 +362,15 @@ export default defineType({
       type: "text",
       rows: 3,
       group: "location",
-      description: "Alamat fisik brand. Tampil di section paling akhir.",
+      description: "Alamat fisik brand. Tampil di section paling akhir (FIND US).",
+    }),
+    defineField({
+      name: "whatsapp",
+      title: "WhatsApp Number",
+      type: "string",
+      group: "location",
+      description:
+        "Nomor WhatsApp brand seperti yang ditampilkan, mis. 0812-3456-7890 atau +62 812-3456-7890. Tampil di section FIND US.",
     }),
     defineField({
       name: "hours",
@@ -433,14 +404,7 @@ export default defineType({
         }),
       ],
     }),
-    defineField({
-      name: "whatsapp",
-      title: "WhatsApp Number",
-      type: "string",
-      group: "contact",
-      description:
-        "Nomor WhatsApp brand seperti yang ditampilkan, mis. 0812-3456-7890 atau +62 812-3456-7890. Tampil di section FIND US.",
-    }),
+
     defineField({
       name: "instagramUrl",
       title: "Instagram URL",
@@ -454,8 +418,7 @@ export default defineType({
       title: "Action Buttons",
       type: "array",
       group: "contact",
-      description:
-        "Tombol aksi di halaman brand. Urutan tampil mengikuti urutan di sini.",
+      description: "Tombol aksi di halaman brand. Urutan tampil mengikuti urutan di sini.",
       of: [
         defineArrayMember({
           name: "cta",
@@ -502,12 +465,67 @@ export default defineType({
         }),
       ],
     }),
+
+    defineField({
+      name: "seoTitle",
+      title: "SEO Title",
+      type: "string",
+      group: "seo",
+      description: "Kosongkan untuk memakai '<Nama> — Samsara Group'.",
+      validation: (rule) => rule.max(60),
+    }),
+    defineField({
+      name: "seoDescription",
+      title: "SEO Description",
+      type: "text",
+      rows: 3,
+      group: "seo",
+      description:
+        "Ringkasan untuk mesin pencari. Ideal 140–160 karakter. Juga dipakai sebagai meta description.",
+      validation: (rule) => rule.max(165),
+    }),
+    defineField({
+      name: "socialImage",
+      title: "Social Share Image",
+      type: "image",
+      group: "seo",
+      description:
+        "Gambar saat link dibagikan di WhatsApp/Instagram. Ideal 1200x630. Kosongkan untuk memakai card image.",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "noIndex",
+      title: "Hide from Search Engines",
+      type: "boolean",
+      group: "seo",
+      description: "Aktifkan untuk halaman arsip atau draft yang belum siap.",
+      initialValue: false,
+    }),
+    defineField({
+      name: "localBusinessType",
+      title: "LocalBusiness Type (JSON-LD)",
+      type: "string",
+      group: "seo",
+      description:
+        "Tipe schema.org untuk structured data. Pilih None bila alamat/telepon belum lengkap. Hanya dipakai bila Address atau WhatsApp terisi.",
+      initialValue: "none",
+      options: { layout: "dropdown", list: LOCAL_BUSINESS_TYPES },
+      validation: (rule) =>
+        rule.custom((value) =>
+          !value || LOCAL_BUSINESS_TYPES.some((type) => type.value === value)
+            ? true
+            : "Pilih tipe LocalBusiness yang tersedia."
+        ),
+    }),
+
     defineField({
       name: "order",
       title: "Order",
       type: "number",
       group: "publishing",
-      description: "Urutan tampil di /brands dan navigasi. Angka kecil tampil lebih dulu.",
+      description:
+        "Urutan tampil di /brands, navigasi, dan sitemap. Angka kecil tampil lebih dulu. Kosong = paling akhir. Default 100.",
+      initialValue: 100,
       validation: (rule) => rule.integer().min(1).max(999),
     }),
     defineField({
@@ -516,7 +534,7 @@ export default defineType({
       type: "string",
       group: "publishing",
       description:
-        "Active = tampil di website. Draft = hanya terlihat di Studio. Archived = disembunyikan dari navigasi tapi URL tetap hidup.",
+        "Active = tampil di website. Draft = 404, hanya terlihat di Studio. Archived = 404, disimpan sebagai arsip.",
       initialValue: "active",
       options: {
         layout: "radio",
@@ -537,40 +555,6 @@ export default defineType({
       description:
         "Brand unggulan. Tampil di /brands, sebagai baris sendiri di dropdown navigasi (semua halaman), dan di sitemap. Penting: Featured = false membuat halaman /<slug> mengembalikan 404 — brand hilang total dari situs, bukan hanya dari daftar. Gunakan status Draft jika hanya ingin menyembunyikan tanpa menghapus dokumen.",
       initialValue: true,
-    }),
-    defineField({
-      name: "seoTitle",
-      title: "SEO Title",
-      type: "string",
-      group: "seo",
-      description: "Kosongkan untuk memakai '<Nama> - Samsara Group'.",
-      validation: (rule) => rule.max(60),
-    }),
-    defineField({
-      name: "seoDescription",
-      title: "SEO Description",
-      type: "text",
-      rows: 3,
-      group: "seo",
-      description: "Ringkasan untuk mesin pencari. Ideal 140-160 karakter.",
-      validation: (rule) => rule.max(165),
-    }),
-    defineField({
-      name: "socialImage",
-      title: "Social Share Image",
-      type: "image",
-      group: "seo",
-      description:
-        "Gambar saat link dibagikan di WhatsApp/Instagram. Ideal 1200x630. Kosongkan untuk memakai card image.",
-      options: { hotspot: true },
-    }),
-    defineField({
-      name: "noIndex",
-      title: "Hide from Search Engines",
-      type: "boolean",
-      group: "seo",
-      description: "Aktifkan untuk halaman arsip atau draft yang belum siap.",
-      initialValue: false,
     }),
   ],
   orderings: [
