@@ -9,8 +9,9 @@ export default defineType({
   groups: [
     { name: "hero", title: "1 — Hero", default: true },
     { name: "listings", title: "2 — Listings" },
-    { name: "apply", title: "3 — Apply" },
-    { name: "seo", title: "4 — SEO" },
+    { name: "empty", title: "3 — Empty State" },
+    { name: "apply", title: "4 — Apply" },
+    { name: "seo", title: "5 — SEO" },
   ],
   fields: [
     defineField({
@@ -71,22 +72,50 @@ export default defineType({
       validation: (rule) => rule.required().max(60),
     }),
     defineField({
-      name: "emptyHeadline",
-      title: "Judul Saat Tidak Ada Lowongan",
+      name: "emptyEyebrow",
+      title: "Eyebrow",
       type: "string",
-      group: "listings",
+      group: "empty",
       description:
-        "Tampil besar menggantikan 'Judul Daftar Lowongan' jika tidak ada lowongan aktif. Contoh: No open positions right now.",
+        "Label kecil di atas headline empty state. Contoh: No Open Positions. Kosongkan untuk menyembunyikan.",
+      validation: (rule) => rule.max(40),
+    }),
+    defineField({
+      name: "emptyHeadline",
+      title: "Headline",
+      type: "string",
+      group: "empty",
+      description:
+        "Judul besar saat tidak ada lowongan aktif. Contoh: No open positions right now.",
       validation: (rule) => rule.max(60),
     }),
     defineField({
       name: "emptyMessage",
-      title: "Pesan Saat Lowongan Kosong",
+      title: "Paragraph",
       type: "string",
-      group: "listings",
+      group: "empty",
       description:
-        "Tampil kalau tidak ada lowongan yang cocok dengan filter, atau saat CMS tidak dapat dihubungi.",
-      validation: (rule) => rule.max(200),
+        "Paragraf saat tidak ada lowongan aktif. Juga dipakai saat filter departemen tidak menemukan hasil.",
+      validation: (rule) => rule.max(300),
+    }),
+    defineField({
+      name: "emptyCtaLabel",
+      title: "CTA Label",
+      type: "string",
+      group: "empty",
+      description:
+        "Contoh: Send us a note. Kosongkan label dan URL untuk menyembunyikan tombol.",
+      initialValue: "Send us a note",
+      validation: (rule) => rule.max(40),
+    }),
+    defineField({
+      name: "emptyCtaUrl",
+      title: "CTA URL",
+      type: "url",
+      group: "empty",
+      description:
+        "Tujuan tombol CTA. Hanya https. Kosongkan untuk memakai Google Form default di grup Apply.",
+      validation: (rule) => rule.uri({ scheme: ["https"] }),
     }),
     defineField({
       name: "applyUrl",

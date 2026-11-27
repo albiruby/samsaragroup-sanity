@@ -64,14 +64,6 @@ export default defineType({
       validation: (rule) => rule.required().max(80),
     }),
     defineField({
-      name: "slug",
-      title: "Slug",
-      type: "slug",
-      group: "role",
-      options: { source: "title", maxLength: 96 },
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: "department",
       title: "Department",
       type: "string",
