@@ -95,7 +95,7 @@ const sharedConfig = {
                 S.document()
                   .schemaType('careerPage')
                   .documentId('careerPage')
-                  .title('Career Page — Hero, Listings, Empty State, Apply & SEO'),
+                  .title('Career Page'),
               ),
             S.divider(),
             S.listItem()

@@ -5,11 +5,11 @@ export default defineType({
   title: "Career Page",
   type: "document",
   description:
-    "Isi halaman /career. Satu dokumen untuk seluruh halaman — teks bagian atas, judul daftar lowongan, dan Google Form default. Lowongannya sendiri ada di dokumen Career.",
+    "Isi halaman /career. Satu dokumen untuk seluruh halaman — teks bagian atas, teks bagian bawah, judul daftar lowongan, dan Google Form default. Lowongannya sendiri ada di dokumen Career.",
   groups: [
     { name: "hero", title: "1 — Hero", default: true },
     { name: "listings", title: "2 — Listings" },
-    { name: "empty", title: "3 — Empty State" },
+    { name: "empty", title: "3 — Teks Bawah" },
     { name: "apply", title: "4 — Apply" },
     { name: "seo", title: "5 — SEO" },
   ],
@@ -49,7 +49,7 @@ export default defineType({
     }),
     defineField({
       name: "positionsHeading",
-      title: "Judul Daftar Lowongan",
+      title: "Judul Saat Ada Lowongan",
       type: "string",
       group: "listings",
       description: "Contoh: Currently open positions.",
@@ -57,49 +57,38 @@ export default defineType({
     }),
     defineField({
       name: "emptyEyebrow",
-      title: "Empty State Eyebrow",
+      title: "Teks Kecil",
       type: "string",
       group: "empty",
-      description:
-        "Label kecil di atas headline empty state. Contoh: No Open Positions. Kosongkan untuk menyembunyikan.",
+      description: "Teks kecil di atas judul. Kosongkan untuk menyembunyikan.",
       validation: (rule) => rule.max(40),
     }),
     defineField({
       name: "emptyHeadline",
-      title: "Empty State Headline",
+      title: "Judul",
       type: "string",
       group: "empty",
-      description:
-        "Judul besar saat tidak ada lowongan aktif. Contoh: No open positions right now.",
+      description: "Judul saat tidak ada lowongan. Contoh: No open positions right now.",
       validation: (rule) => rule.max(60),
     }),
     defineField({
       name: "emptyMessage",
-      title: "Empty State Paragraph",
+      title: "Paragraf",
       type: "string",
       group: "empty",
       description:
-        "Paragraf saat tidak ada lowongan aktif. Juga dipakai saat filter departemen tidak menemukan hasil.",
+        "Paragraf saat tidak ada lowongan. Juga dipakai saat filter departemen tidak menemukan hasil.",
       validation: (rule) => rule.max(300),
     }),
     defineField({
       name: "emptyCtaLabel",
-      title: "Empty State CTA Label",
+      title: "Tombol",
       type: "string",
       group: "empty",
       description:
-        "Contoh: Send us a note. Kosongkan label dan URL untuk menyembunyikan tombol.",
+        "Teks tombol. Tautan memakai Google Form Default di grup Apply.",
       initialValue: "Send us a note",
       validation: (rule) => rule.max(40),
-    }),
-    defineField({
-      name: "emptyCtaUrl",
-      title: "Empty State CTA URL",
-      type: "url",
-      group: "empty",
-      description:
-        "Tujuan tombol CTA. Hanya https. Kosongkan untuk memakai Google Form default di grup Apply.",
-      validation: (rule) => rule.uri({ scheme: ["https"] }),
     }),
     defineField({
       name: "applyUrl",
@@ -107,16 +96,16 @@ export default defineType({
       type: "url",
       group: "apply",
       description:
-        "Dipakai lowongan yang applyUrl-nya kosong. Sebaiknya satu form untuk semua brand.",
+        "Dipakai lowongan yang applyUrl-nya kosong dan tombol pada Teks Bawah. Sebaiknya satu form untuk semua brand.",
       validation: (rule) => rule.required().uri({ scheme: ["https"] }),
     }),
     defineField({
       name: "applyNote",
-      title: "Catatan di Bawah Daftar",
+      title: "Catatan",
       type: "string",
-      group: "apply",
+      group: "empty",
       description:
-        "Satu kalimat penutup. Contoh: Don't see the right role? Send us a note. Kosongkan untuk menyembunyikan.",
+        "Catatan di bawah tombol atau daftar. Contoh: Don't see the right role? Send us a note. Kosongkan untuk menyembunyikan.",
       validation: (rule) => rule.max(200),
     }),
     defineField({
