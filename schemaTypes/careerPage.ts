@@ -40,22 +40,6 @@ export default defineType({
       validation: (rule) => rule.max(320),
     }),
     defineField({
-      name: "theme",
-      title: "Theme",
-      type: "string",
-      group: "hero",
-      description: "Mode warna halaman.",
-      initialValue: "light",
-      options: {
-        layout: "radio",
-        direction: "horizontal",
-        list: [
-          { title: "Light", value: "light" },
-          { title: "Dark", value: "dark" },
-        ],
-      },
-    }),
-    defineField({
       name: "showBrandStrip",
       title: "Tampilkan Strip Logo Brand",
       type: "boolean",
@@ -73,7 +57,7 @@ export default defineType({
     }),
     defineField({
       name: "emptyEyebrow",
-      title: "Eyebrow",
+      title: "Empty State Eyebrow",
       type: "string",
       group: "empty",
       description:
@@ -82,7 +66,7 @@ export default defineType({
     }),
     defineField({
       name: "emptyHeadline",
-      title: "Headline",
+      title: "Empty State Headline",
       type: "string",
       group: "empty",
       description:
@@ -91,7 +75,7 @@ export default defineType({
     }),
     defineField({
       name: "emptyMessage",
-      title: "Paragraph",
+      title: "Empty State Paragraph",
       type: "string",
       group: "empty",
       description:
@@ -100,7 +84,7 @@ export default defineType({
     }),
     defineField({
       name: "emptyCtaLabel",
-      title: "CTA Label",
+      title: "Empty State CTA Label",
       type: "string",
       group: "empty",
       description:
@@ -110,7 +94,7 @@ export default defineType({
     }),
     defineField({
       name: "emptyCtaUrl",
-      title: "CTA URL",
+      title: "Empty State CTA URL",
       type: "url",
       group: "empty",
       description:
